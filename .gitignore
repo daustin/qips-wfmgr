@@ -21,4 +21,4 @@ gems/*
 interact*.xml
 config/database.yml
 config/aws.rb
-
+work*/*

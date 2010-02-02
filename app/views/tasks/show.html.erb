@@ -1,0 +1,23 @@
+<p>
+  <b>Process def:</b>
+  <%=h @task.process_def %>
+</p>
+
+<p>
+  <b>Rank:</b>
+  <%=h @task.rank %>
+</p>
+
+<p>
+  <b>Submission:</b>
+  <%=h @task.submission_id %>
+</p>
+
+<p>
+  <b>State:</b>
+  <%=h @task.state %>
+</p>
+
+
+<%= link_to 'Edit', edit_task_path(@task) %> |
+<%= link_to 'Back', tasks_path %>

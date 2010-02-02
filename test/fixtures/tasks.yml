@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  process_def: MyText
+  rank: 1
+  submission_id: 1
+  state: MyString
+
+two:
+  process_def: MyText
+  rank: 1
+  submission_id: 1
+  state: MyString
