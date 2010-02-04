@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  params_template: MyText
+  params_filename: MyString
+  run_concurrent: false
+
+two:
+  name: MyString
+  params_template: MyText
+  params_filename: MyString
+  run_concurrent: false

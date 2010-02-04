@@ -1,0 +1,10 @@
+<div class="stage">
+<% fields_for "workflow[stage_attributes][]", stage do |f| 
+stage.id = nil
+%>
+
+Protocol: <%= f.select :protocol_id,  Protocol.all.collect {|pt| ["#{pt.name}", pt.id]} %>   
+<%= link_to_function "remove", "this.up('.stage').remove()" %>
+<% end %>
+</div>
+

@@ -1,0 +1,27 @@
+<h1>New protocol</h1>
+
+<% form_for(@protocol) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :params_template %><br />
+    <%= f.text_area :params_template %>
+  </p>
+  <p>
+    <%= f.label :params_filename %><br />
+    <%= f.text_field :params_filename %>
+  </p>
+  <p>
+    <%= f.label :run_concurrent %><br />
+    <%= f.check_box :run_concurrent %>
+  </p>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', protocols_path %>

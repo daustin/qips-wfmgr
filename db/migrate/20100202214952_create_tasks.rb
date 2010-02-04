@@ -7,6 +7,9 @@ class CreateTasks < ActiveRecord::Migration
       t.string :state
 
       t.timestamps
+      
+      t.belongs_to :submission
+      
     end
   end
 

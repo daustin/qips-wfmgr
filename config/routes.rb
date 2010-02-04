@@ -1,4 +1,10 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :stages
+
+  map.resources :workflows
+
+  map.resources :protocols
+
   map.resources :tasks
 
   map.resources :submissions

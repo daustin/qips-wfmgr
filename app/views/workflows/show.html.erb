@@ -1,0 +1,13 @@
+<p>
+  <b>Name:</b>
+  <%=h @workflow.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @workflow.description %>
+</p>
+
+
+<%= link_to 'Edit', edit_workflow_path(@workflow) %> |
+<%= link_to 'Back', workflows_path %>
