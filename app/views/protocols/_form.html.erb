@@ -1,0 +1,68 @@
+<% form_for(@protocol) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name %>: <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.check_box :run_concurrent %> Run Concurrently for each input file 
+  </p>
+
+  <p>
+    <%= f.label :input_file_types %> (separated by space):    <%= f.text_field :input_file_types %>
+  </p>
+
+  <p>
+    <%= f.label :output_file_types %> (separated by space):    <%= f.text_field :output_file_types %>
+  </p>
+
+  <p>
+    <%= f.label :executable %> (full path):    <%= f.text_field :executable %>
+  </p>
+
+  <p>
+    <%= f.label :default_args %>:    <%= f.text_field :default_args %>
+  </p>
+
+  <p>
+    <%= f.label :process_timeout %>:    <%= f.text_field :process_timeout, :size => 5 %>
+  </p>
+
+  <p>
+    <%= f.label :params_filename %>:  <%= f.text_field :params_filename %>
+  </p>
+
+  <p>
+    <%= f.label :params_template %><br />
+    <%= f.text_area :params_template %>
+  </p>
+
+   
+  <table border="1">
+    <TR>
+      <td>
+       <h2>Protocol Parameters</h2>
+       <p>These Parameters will be presented to the user so they can specify the settings for the job.  The parameter values will get saved into a file as the params filename, which is passed along to the working directory.  The format of the params file is generated from the params template above(erb). The position field tells which order the parameter fields are presented to the user. 
+
+     <div id="params">
+     <%= render :partial => 'parameter', :collection => @protocol.parameters %>
+     </div>
+
+     <%= link_to_function "Add Another Parameter" do |page|
+       page.insert_html :bottom,  :params, :partial => 'parameter', :object => Parameter.new()
+     end %>
+       
+      </td>
+
+    </TR>
+  </table>
+
+
+
+
+ 
+  <p>
+    <%= f.submit 'Submit' %>
+  </p>
+
+<% end %>

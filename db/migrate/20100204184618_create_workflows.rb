@@ -5,6 +5,10 @@ class CreateWorkflows < ActiveRecord::Migration
       t.text :description
 
       t.timestamps
+      
+      t.has_many :stages
+      t.has_many :protocols, :through => :stages
+      
     end
   end
 

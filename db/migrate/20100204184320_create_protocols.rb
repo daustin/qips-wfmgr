@@ -7,6 +7,9 @@ class CreateProtocols < ActiveRecord::Migration
       t.boolean :run_concurrent
 
       t.timestamps
+      
+      t.has_many :workflows, :through => :stages
+      
     end
   end
 
