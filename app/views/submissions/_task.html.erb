@@ -1,0 +1,12 @@
+<tr><td>
+<div class="task">
+<% fields_for "submission[task_attributes][]", task do |t| 
+
+%>
+<p> <b><%= task.protocol.name %></b></p>
+<%= t.hidden_field :protocol_id, :value => task.protocol_id %>
+<%= t.hidden_field :rank, :value => task.rank %>
+<p>Executable: <%= t.text_field :executable, :value => task.protocol.executable, :readonly => true %> Args: <%= t.text_field :args, :value => task.protocol.default_args %>  
+<% end %>
+</div>
+</td></tr>

@@ -25,7 +25,14 @@ class SubmissionsController < ApplicationController
   # GET /submissions/new.xml
   def new
     @submission = Submission.new
-
+    @workflow = Workflow.find(params[:id])
+    
+    c = 0
+    @workflow.protocols.each do |p|
+      @submission.tasks.build(:protocol => p, :rank => c)
+      c += 1
+    end
+    
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @submission }

@@ -9,6 +9,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :submissions
 
+  map.new_workflow_submission 'submission/new/:id', :controller => 'submissions', :action => 'new'
+
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:

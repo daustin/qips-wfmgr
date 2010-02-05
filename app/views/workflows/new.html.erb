@@ -1,29 +1,71 @@
 <h1>New workflow</h1>
 
-<% form_for(@workflow) do |f| %>
+<% form_for(@workflow, :name => 'workflow_form') do |f| %>
   <%= f.error_messages %>
 
-  <p>
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </p>
-  <p>
-    <%= f.label :description %><br />
-    <%= f.text_area :description %>
-  </p>
-  <p>
-    <%= f.submit 'Create' %>
-  </p>
+<script>
 
-	 <div id="stages">
-   <%= render :partial => 'stage', :collection => @workflow.stages %>
-   </div>
 
-   <%= link_to_function "Add a Protocol" do |page|
+</script>
+
+<table>
+	
+<tr>
+<td valign='top'>
+	<p>
+	    <%= f.label :name %><br />
+	    <%= f.text_field :name %>
+	  </p>
+	  <p>
+	    <%= f.label :description %><br />
+	    <%= f.text_area :description %>
+	  </p>	
+	
+	
+	
+</td>
+<td valign='top'>
+   <br>
+   <p>
+   Add Protocols to workflow:
+   </p>
+   <!-- <%= select_tag "protocol_list", options_for_select(Protocol.all.collect {|pt| ["#{pt.name}", pt.id]}), :multiple => true, :id => 'protocol_list'%> -->
+   <br><br>
+   <%= link_to_function "Add" do |page|
      page.insert_html :bottom,  :stages, :partial => 'stage', :object => Stage.new(:position => 0)
-   end %>
+     # page << "test = $('protocol_list').value"
+     # page[:stages].replace_html "test"
+
+   end %>   
+   <br><br>
+   <div id="stages">
+		<%= render :partial => 'stage', :collection => @workflow.stages %>
+    
+   </div>
+	
+	
+</td>	
+	
+</tr>
+<tr>
+	<td>
+		<p>
+			
+			<%= hidden_field_tag "submit_flag", "0" %>
+			
+		    <%= f.submit 'Save & Submit', :onclick => "$('submit_flag').value = 1"  %>  <%= f.submit 'Save Only'%> <%= link_to 'Back', workflows_path %>
+		 </p>
+	</td>
+</tr>		
+	
+	
+	
+	
+</table>
+   
+
+
 
 
 <% end %>
 
-<%= link_to 'Back', workflows_path %>

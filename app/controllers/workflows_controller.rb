@@ -9,7 +9,7 @@ class WorkflowsController < ApplicationController
       format.xml  { render :xml => @workflows }
     end
   end
-
+ 
   # GET /workflows/1
   # GET /workflows/1.xml
   def show
@@ -45,7 +45,15 @@ class WorkflowsController < ApplicationController
     respond_to do |format|
       if @workflow.save
         flash[:notice] = 'Workflow was successfully created.'
-        format.html { redirect_to(@workflow) }
+        format.html { 
+          
+          if params[:submit_flag].to_i == 1
+             redirect_to(new_workflow_submission(:id => @workflow.id))
+          else
+            redirect_to(workflows_path)
+          end
+                   
+          }
         format.xml  { render :xml => @workflow, :status => :created, :location => @workflow }
       else
         format.html { render :action => "new" }

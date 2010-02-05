@@ -10,6 +10,7 @@
   <tr>
     <td><%=h workflow.name %></td>
     <td><%=h workflow.description %></td>
+	<td><%= link_to 'Submit', new_workflow_submission_url(:id => workflow.id) %></td>
     <td><%= link_to 'Show', workflow %></td>
     <td><%= link_to 'Edit', edit_workflow_path(workflow) %></td>
     <td><%= link_to 'Destroy', workflow, :confirm => 'Are you sure?', :method => :delete %></td>

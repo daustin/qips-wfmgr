@@ -2,6 +2,30 @@
   <b>Owner:</b>
   <%=h @submission.owner %>
 </p>
+<p>
+  <b>Input Files:</b>
+  <%=h @submission.input_files.inspect %>
+</p>
+<p>
+
+  <b>Output Folder:</b>
+  <%=h @submission.output_folder %>
+</p>
+<p>
+
+  <b>Tasks:</b>
+  <blockquote>
+  <% @submission.tasks.each do |t|%>
+
+	<p><b><%=h t.rank %> - <%=h t.protocol.name %></b>
+	</p>
+	<p>
+	  <pre><%=h t.executable %> <%=h t.args %></pre>
+	</p>	
+
+  <% end %>
+  </blockquote>
+</p>
 
 
 <%= link_to 'Edit', edit_submission_path(@submission) %> |

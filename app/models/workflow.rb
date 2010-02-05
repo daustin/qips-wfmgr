@@ -1,6 +1,6 @@
 class Workflow < ActiveRecord::Base
   has_many :stages, :order => :position
-  has_many :protcols, :through => :stages
+  has_many :protocols, :through => :stages
   
   
   def stage_attributes=(stage_attributes)

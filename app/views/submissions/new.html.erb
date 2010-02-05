@@ -7,6 +7,33 @@
     <%= f.label :owner %><br />
     <%= f.text_field :owner %>
   </p>
+
+  <p>
+    <%= f.label :input_files %> -   <%= link_to_function "more" do |page|
+		     page.insert_html :bottom,  :input_files, :partial => 'input_files'
+
+		   end %> -
+    <div id="input_files">
+	  <%= render :partial => 'input_files' %>
+	</div>
+
+
+
+  </p>
+
+
+  <p>
+    <%= f.label :output_folder %><br />
+    <%= f.text_field :output_folder %>
+  </p>
+  
+   <h3>Fill in Protocols Below:</h3>
+
+  <div id="tasks">
+	<table cellspacing=0 cellpadding=5 border=1>
+  <%= render :partial => 'task', :collection => @submission.tasks %>
+     </table>
+  </div>
   <p>
     <%= f.submit 'Create' %>
   </p>
