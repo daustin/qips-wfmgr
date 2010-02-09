@@ -15,6 +15,11 @@ module Ruote
       self.engine.register_participant(/debug_log/, Ruote::RailsDebugLogParticipant)
       self.engine.register_participant(/qips_node.*/, RuoteAMQP::Participant)
       self.engine.register_participant(/rmgr_start/, StorageParticipant)
+      self.engine.register_participant( 'cleanup' ) do |workitem|
+        puts workitem.to_h.inspect
+      end
+      
+      
     end
  
     def ensure_engine!

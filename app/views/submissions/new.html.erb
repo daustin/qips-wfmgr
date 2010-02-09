@@ -9,7 +9,7 @@
   </p>
 
   <p>
-    <%= f.label :input_files %> -   <%= link_to_function "more" do |page|
+    <%= f.label :input_files %> (S3 Bucket URL) -   <%= link_to_function "more" do |page|
 		     page.insert_html :bottom,  :input_files, :partial => 'input_files'
 
 		   end %> -
@@ -17,13 +17,10 @@
 	  <%= render :partial => 'input_files' %>
 	</div>
 
-
-
   </p>
 
-
   <p>
-    <%= f.label :output_folder %><br />
+    <%= f.label :output_folder %> (S3 Bucket URL) <br />
     <%= f.text_field :output_folder %>
   </p>
   

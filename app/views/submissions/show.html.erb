@@ -25,7 +25,20 @@
 
   <% end %>
   </blockquote>
+
 </p>
+
+<p>
+	<b>Process Definition:</b>
+	<PRE>
+	    <%=h @submission.generate_process_definition.to_s %>
+	</PRE>
+	
+</p>
+	
+	
+
+
 
 
 <%= link_to 'Edit', edit_submission_path(@submission) %> |
