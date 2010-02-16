@@ -29,10 +29,10 @@
 </p>
 
 <p>
-	<b>Process Definition:</b>
-	<PRE>
-	    <%=h @submission.generate_process_definition.to_s %>
-	</PRE>
+	<b>Process Definition:<BR><BR></b>
+
+	    <%= text_area_tag 'xml', @nice_xml, :size => '100x25' %>
+
 	
 </p>
 	

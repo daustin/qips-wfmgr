@@ -15,10 +15,9 @@ module Ruote
       self.engine.register_participant(/debug_log/, Ruote::RailsDebugLogParticipant)
       self.engine.register_participant(/qips_node.*/, RuoteAMQP::Participant)
       self.engine.register_participant(/rmgr_start/, StorageParticipant)
-      self.engine.register_participant( 'cleanup' ) do |workitem|
-        puts workitem.to_h.inspect
-      end
-      
+      self.engine.register_participant(/console/, Ruote::ConsoleParticipant)
+      self.engine.register_participant(/merge_output_files/, Ruote::ConsoleParticipant)
+      #self.engine.register_participant(/merge_output_files/, Ruote::MergeOutputsParticipant)
       
     end
  
@@ -74,7 +73,7 @@ module Ruote
     end
  
     def consume(workitem)
-      ActionController::Base.logger.debug("Got workitem:\n#{workitem.inspect}")
+      ActionController::Base.logger.debug("Got workitem:\n#{workitem.to_h.inspect}")
       reply_to_engine(workitem)
     end
  
@@ -82,6 +81,59 @@ module Ruote
       # do nothing
     end
   end
+  
+  class MergeOutputsParticipant
+    include LocalParticipant
+ 
+    attr_accessor :context
+ 
+    def initialize(opts)
+      @opts = opts
+    end
+ 
+    def consume(workitem)
+      previous_output_files = Array.new
+      ActionController::Base.logger.info("Merge Participant: \n#{workitem.to_h.inspect}")
+      workitem.fields.keys.each do |k|
+        puts "Checking #{k}"
+        if k =~ /output_files_\d_\d_\d_\d/
+          previous_output_files = previous_output_files.concat(workitem.fields[k])
+          puts "Added #{workitem.fields[k]}"
+          workitem.fields.delete k
+        end
+      end
+      workitem.fields['previous_output_files'] = previous_output_files
+      
+      reply_to_engine(workitem)
+    end
+ 
+    def cancel (fei, flavour)
+      # do nothing
+    end
+  end
+  
+  class ConsoleParticipant
+    include LocalParticipant
+ 
+    attr_accessor :context
+ 
+    def initialize(opts)
+      @opts = opts
+    end
+ 
+    def consume(workitem)
+      puts "Console Participant:\n#{workitem.to_h.inspect}"
+      ActionController::Base.logger.info("Console Participant: \n#{workitem.to_h.inspect}")
+      reply_to_engine(workitem)
+    end
+ 
+    def cancel (fei, flavour)
+      # do nothing
+    end
+  end
+  
+  
+  
 end
  
 Ruote.work_directory = File.join(RAILS_ROOT, "work_#{RAILS_ENV.downcase}")

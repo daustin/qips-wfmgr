@@ -48,7 +48,7 @@ class WorkflowsController < ApplicationController
         format.html { 
           
           if params[:submit_flag].to_i == 1
-             redirect_to(new_workflow_submission(:id => @workflow.id))
+             redirect_to(new_workflow_submission_url(:id => @workflow.id))
           else
             redirect_to(workflows_path)
           end

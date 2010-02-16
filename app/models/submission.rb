@@ -28,11 +28,11 @@ class Submission < ActiveRecord::Base
     
     logger.info pdef
     
-    #Create temp folder on S3
+    # Create temp folder on S3
     
-    # RuoteAMQP::WorkitemListener.new(engine)
-    # wfid = engine.launch(pdef)
-    # engine.wait_for(wfid)
+    RuoteAMQP::WorkitemListener.new(Ruote.engine)
+    wfid = Ruote.engine.launch(pdef)
+    # Ruote.engine.wait_for(wfid)
 
     
   end
@@ -40,31 +40,50 @@ class Submission < ActiveRecord::Base
   
   def generate_process_definition
     
-    infile_concat = ''
-    input_files.each {|i| infile_concat += "#{i} "}
-    logger.info tasks.inspect
+    # need to reassign vars because self gets overwritten in Dsl
     
-    # first we need to build the process defintion directly from nested arrays.
+    in_files = self.input_files
     
-    tasks1 = self.tasks
-    
-    
+    task_array = self.tasks
+    out_folder = self.output_folder
+    count = 0
+
     pdef = Ruote.process_definition do
       sequence do
         
-        #logger.info tasks.inspect
-       
-          
-         
-            concurrence do 
-              input_files.each do |in_file|
-                participant :ref => 'qips_node', :input_files => in_file
+        # now process each task, concurrently if needed
+        
+        task_array.each do |t|
+
+          if t.protocol.run_concurrent
+            concurrence :merge_type => 'mix' do
+              in_files.each do |i|
+                qips_node :command => '/worker/start_work', :input_files => "#{count > 0 ? nil : i}", 
+                :executable => "#{t.executable}", :args => "#{t.args}", :exec_timeout => "#{t.protocol.process_timeout}",
+                :queue => "#{t.protocol.queue}", :output_folder => "#{out_folder}"
               end
+             
             end
             
-         
+            merge_output_files
+            
+            
+          else
+            
+            qips_node :command => '/worker/start_work', :input_files => "#{count > 0 ? nil : in_files.join(' ')}", 
+            :executable => "#{t.executable}", :args => "#{t.args}", :exec_timeout => "#{t.protocol.process_timeout}",
+            :queue => "#{t.protocol.queue}", :output_folder => "#{out_folder}"
+            
+            
+          end
+          
         
-        cleanup
+        count += 1  
+        end
+        
+        
+    
+        # debug_log
   
       end
   
