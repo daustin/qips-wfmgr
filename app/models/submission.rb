@@ -4,8 +4,7 @@ class Submission < ActiveRecord::Base
   serialize :input_files
   
   after_save :submit_job
-  
-  
+
   def task_attributes=(task_attributes)
     task_attributes.each do |attributes|
       tasks.build(attributes)
@@ -22,12 +21,8 @@ class Submission < ActiveRecord::Base
 
     self.submission_tag = Time.now.to_i
     
-    
-    
     pdef = generate_process_definition
-    
-    logger.info pdef
-    
+
     # Create temp folder on S3
     
     RuoteAMQP::WorkitemListener.new(Ruote.engine)
@@ -58,22 +53,39 @@ class Submission < ActiveRecord::Base
           if t.protocol.run_concurrent
             concurrence :merge_type => 'mix' do
               in_files.each do |i|
-                qips_node :command => '/worker/start_work', :input_files => "#{count > 0 ? nil : i}", 
-                :executable => "#{t.executable}", :args => "#{t.args}", :exec_timeout => "#{t.protocol.process_timeout}",
-                :queue => "#{t.protocol.queue}", :output_folder => "#{out_folder}"
+                
+                if count > 0
+                  qips_node :command => '/worker/start_work', 
+                  :executable => "#{t.executable}", :args => "#{t.args}", :exec_timeout => "#{t.protocol.process_timeout}",
+                  :queue => "#{t.protocol.queue}", :output_folder => "#{out_folder}"
+                
+                else
+                  qips_node :command => '/worker/start_work', :input_files => "#{count > 0 ? nil : i}", 
+                  :executable => "#{t.executable}", :args => "#{t.args}", :exec_timeout => "#{t.protocol.process_timeout}",
+                  :queue => "#{t.protocol.queue}", :output_folder => "#{out_folder}"
+                end
+                
               end
              
             end
-            
-            merge_output_files
+            # console
+            merge_outputs
             
             
           else
             
-            qips_node :command => '/worker/start_work', :input_files => "#{count > 0 ? nil : in_files.join(' ')}", 
-            :executable => "#{t.executable}", :args => "#{t.args}", :exec_timeout => "#{t.protocol.process_timeout}",
-            :queue => "#{t.protocol.queue}", :output_folder => "#{out_folder}"
+            if count > 0
             
+              qips_node :command => '/worker/start_work', 
+              :executable => "#{t.executable}", :args => "#{t.args}", :exec_timeout => "#{t.protocol.process_timeout}",
+              :queue => "#{t.protocol.queue}", :output_folder => "#{out_folder}"
+            else
+            
+              qips_node :command => '/worker/start_work', :input_files => "#{count > 0 ? nil : in_files.join(' ')}", 
+              :executable => "#{t.executable}", :args => "#{t.args}", :exec_timeout => "#{t.protocol.process_timeout}",
+              :queue => "#{t.protocol.queue}", :output_folder => "#{out_folder}"
+            
+            end
             
           end
           
@@ -81,9 +93,7 @@ class Submission < ActiveRecord::Base
         count += 1  
         end
         
-        
-    
-        # debug_log
+        console
   
       end
   

@@ -16,8 +16,7 @@ module Ruote
       self.engine.register_participant(/qips_node.*/, RuoteAMQP::Participant)
       self.engine.register_participant(/rmgr_start/, StorageParticipant)
       self.engine.register_participant(/console/, Ruote::ConsoleParticipant)
-      self.engine.register_participant(/merge_output_files/, Ruote::ConsoleParticipant)
-      #self.engine.register_participant(/merge_output_files/, Ruote::MergeOutputsParticipant)
+      self.engine.register_participant(/merge_outputs/, Ruote::MergeOutputsParticipant)
       
     end
  
