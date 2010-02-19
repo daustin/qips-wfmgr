@@ -21,6 +21,8 @@ Rails::Initializer.run do |config|
   config.gem "ruote", :version => '2.1.4'
   config.gem "ruote-amqp", :version => '2.1.4pre'
   config.gem 'ruote-kit'
+  config.gem 'sinatra', :version => '0.9.4'
+  config.gem 'sinatra-respond_to', :version => '0.4.0'
   config.middleware.use 'RuoteKit::Application'
   
   # config.gem "aws-s3", :lib => "aws/s3"
