@@ -20,6 +20,8 @@ Rails::Initializer.run do |config|
   config.gem "sqlite3-ruby", :lib => "sqlite3"
   config.gem "ruote", :version => '2.1.4'
   config.gem "ruote-amqp", :version => '2.1.4pre'
+  config.gem 'ruote-kit'
+  config.middleware.use 'RuoteKit::Application'
   
   # config.gem "aws-s3", :lib => "aws/s3"
 

@@ -25,8 +25,8 @@ class Submission < ActiveRecord::Base
 
     # Create temp folder on S3
     
-    RuoteAMQP::WorkitemListener.new(Ruote.engine)
-    wfid = Ruote.engine.launch(pdef)
+    RuoteAMQP::WorkitemListener.new(RuoteKit.engine)
+    wfid = RuoteKit.engine.launch(pdef)
     # Ruote.engine.wait_for(wfid)
 
     
