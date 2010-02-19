@@ -17,6 +17,7 @@ module Ruote
       self.engine.register_participant(/rmgr_start/, StorageParticipant)
       self.engine.register_participant(/console/, Ruote::ConsoleParticipant)
       self.engine.register_participant(/merge_outputs/, Ruote::MergeOutputsParticipant)
+      self.engine.register_participant(/rename_outputs/, Ruote::RenameOutputsParticipant)
       
     end
  
@@ -93,15 +94,57 @@ module Ruote
     def consume(workitem)
       previous_output_files = Array.new
       ActionController::Base.logger.info("Merge Participant: \n#{workitem.to_h.inspect}")
-      workitem.fields.keys.each do |k|
-        puts "Checking #{k}"
-        if k =~ /output_files_\d_\d_\d_\d/
-          previous_output_files = previous_output_files.concat(workitem.fields[k])
-          puts "Added #{workitem.fields[k]}"
-          workitem.fields.delete k
-        end
+
+      # Add files
+
+      i = 0
+      until (workitem.fields[i.to_s].nil?)
+        v = workitem.fields[i.to_s]['output_files']
+        previous_output_files = previous_output_files.concat(v)
+        puts "Added #{v}"
+        i = i + 1
       end
+      
+      # now cleanup the fields
+
+      i = 0
+      until (workitem.fields[i.to_s].nil?)
+        workitem.fields.delete i.to_s
+        i = i + 1
+      end 
+      
       workitem.fields['previous_output_files'] = previous_output_files
+      workitem.fields['previous_output_files_joined'] =  previous_output_files.join(',')
+
+      reply_to_engine(workitem)
+    end
+ 
+    def cancel (fei, flavour)
+      # do nothing
+    end
+  end
+
+  class RenameOutputsParticipant
+    include LocalParticipant
+ 
+    attr_accessor :context
+ 
+    def initialize(opts)
+      @opts = opts
+    end
+ 
+    def consume(workitem)
+      previous_output_files = Array.new
+      ActionController::Base.logger.info("Rename Participant: \n#{workitem.to_h.inspect}")
+
+      previous_output_files = workitem.fields['output_files'] unless  workitem.fields['output_files'].nil?
+
+      # again, cleanup
+
+      workitem.fields.delete 'output_files'
+      
+      workitem.fields['previous_output_files'] = previous_output_files
+      workitem.fields['previous_output_files_joined'] =  previous_output_files.join(',')
       
       reply_to_engine(workitem)
     end
@@ -110,6 +153,7 @@ module Ruote
       # do nothing
     end
   end
+
   
   class ConsoleParticipant
     include LocalParticipant

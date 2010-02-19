@@ -51,39 +51,51 @@ class Submission < ActiveRecord::Base
         task_array.each do |t|
 
           if t.protocol.run_concurrent
-            concurrence :merge_type => 'mix' do
-              in_files.each do |i|
-                
-                if count > 0
-                  qips_node :command => '/worker/start_work', 
-                  :executable => "#{t.executable}", :args => "#{t.args}", :exec_timeout => "#{t.protocol.process_timeout}",
-                  :queue => "#{t.protocol.queue}", :output_folder => "#{out_folder}"
-                
-                else
-                  qips_node :command => '/worker/start_work', :input_files => "#{count > 0 ? nil : i}", 
-                  :executable => "#{t.executable}", :args => "#{t.args}", :exec_timeout => "#{t.protocol.process_timeout}",
-                  :queue => "#{t.protocol.queue}", :output_folder => "#{out_folder}"
-                end
-                
-              end
-             
-            end
-            # console
-            merge_outputs
             
+            if count < 1
+              concurrent_iterator :merge_type => 'isolate', :on_val => "#{in_files.join(',')}", :to_var => 'v' do
+
+                qips_node :command => '/worker/start_work', :input_files => '${v:v}', 
+                :executable => "#{t.executable}", :exec_timeout => "#{t.protocol.process_timeout}",
+                :args => "#{t.args}", :queue => "#{t.protocol.queue}", :output_folder => "#{out_folder}"
+
+              end
+              
+              merge_outputs
+            
+            else
+            
+              concurrent_iterator :merge_type => 'isolate', :on_val => "#{in_files.join(',')}", :to_var => 'v' do
+
+                qips_node :command => '/worker/start_work', :input_files => '${v:v}', 
+                :executable => "#{t.executable}", :exec_timeout => "#{t.protocol.process_timeout}",
+                :args => "#{t.args}", :queue => "#{t.protocol.queue}", :output_folder => "#{out_folder}"
+
+              end
+    
+              merge_outputs
+            
+            end
+      
             
           else
             
-            if count > 0
+            if count < 1
             
-              qips_node :command => '/worker/start_work', 
-              :executable => "#{t.executable}", :args => "#{t.args}", :exec_timeout => "#{t.protocol.process_timeout}",
-              :queue => "#{t.protocol.queue}", :output_folder => "#{out_folder}"
+              qips_node :command => '/worker/start_work', :input_files => "#{in_files.join(',')}",
+              :executable => "#{t.executable}", :exec_timeout => "#{t.protocol.process_timeout}",
+              :args => "#{t.args}", :queue => "#{t.protocol.queue}", :output_folder => "#{out_folder}"
+
+              rename_outputs
+
             else
             
-              qips_node :command => '/worker/start_work', :input_files => "#{count > 0 ? nil : in_files.join(' ')}", 
-              :executable => "#{t.executable}", :args => "#{t.args}", :exec_timeout => "#{t.protocol.process_timeout}",
-              :queue => "#{t.protocol.queue}", :output_folder => "#{out_folder}"
+            
+              qips_node :command => '/worker/start_work', :input_files => "${f:previous_output_files_joined}",
+              :executable => "#{t.executable}", :exec_timeout => "#{t.protocol.process_timeout}",
+              :args => "#{t.args}", :queue => "#{t.protocol.queue}", :output_folder => "#{out_folder}"
+
+              rename_outputs
             
             end
             
