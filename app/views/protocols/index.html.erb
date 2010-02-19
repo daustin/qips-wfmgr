@@ -1,19 +1,21 @@
 <h1>Listing protocols</h1>
 
-<table>
+<table cellpadding="4" cellspacing="5">
   <tr>
     <th>Name</th>
-    <th>Params template</th>
+	<th>Description</th>
+    <th>Concur</th>
     <th>Params filename</th>
-    <th>Run concurrent</th>
+    <th>Executable</th>
   </tr>
 
 <% @protocols.each do |protocol| %>
   <tr>
     <td><%=h protocol.name %></td>
-    <td><%=h protocol.params_template %></td>
-    <td><%=h protocol.params_filename %></td>
+    <td><%=h protocol.description %></td>
     <td><%=h protocol.run_concurrent %></td>
+    <td><%=h protocol.params_filename %></td>
+    <td><%=h protocol.executable %> <%=h protocol.default_args %></td>
     <td><%= link_to 'Show', protocol %></td>
     <td><%= link_to 'Edit', edit_protocol_path(protocol) %></td>
     <td><%= link_to 'Destroy', protocol, :confirm => 'Are you sure?', :method => :delete %></td>

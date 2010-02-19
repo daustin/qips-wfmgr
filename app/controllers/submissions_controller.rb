@@ -4,7 +4,7 @@ class SubmissionsController < ApplicationController
   # GET /submissions
   # GET /submissions.xml
   def index
-    @submissions = Submission.all
+    @submissions = Submission.find(:all, :order => 'created_at DESC')
 
     respond_to do |format|
       format.html # index.html.erb

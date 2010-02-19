@@ -79,3 +79,9 @@ a {
   font-size: 12px;
   list-style: disc;
 }
+
+#user_nav {
+  float: top;
+  font-size: 12px;
+ 
+}

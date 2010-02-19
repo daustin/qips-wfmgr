@@ -8,6 +8,11 @@
   <%=h @workflow.description %>
 </p>
 
+<p>
+  <b>Protocols:</b><BR><BR>
+  <%= render :partial => 'protocols' %>
+</p>
+
 
 <%= link_to 'Edit', edit_workflow_path(@workflow) %> |
 <%= link_to 'Back', workflows_path %>

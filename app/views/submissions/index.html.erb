@@ -1,20 +1,25 @@
 <h1>Listing submissions</h1>
 
-<table>
+<table cellpadding="4" cellspacing="5">
   <tr>
     <th>Owner</th>
+	<th>Output Folder</th>
+	<th>Tasks</th>
+	<th>Submitted At</th>
   </tr>
 
 <% @submissions.each do |submission| %>
   <tr>
     <td><%=h submission.owner %></td>
-    <td><%= link_to 'Show', submission %></td>
-    <td><%= link_to 'Edit', edit_submission_path(submission) %></td>
-    <td><%= link_to 'Destroy', submission, :confirm => 'Are you sure?', :method => :delete %></td>
+	<td><%=h submission.output_folder %></td>
+	<td>|<% submission.tasks.each do |t| %>
+		<%= t.protocol.name %> | 
+		<% end %>
+		</td>
+	
+	<td><%=h submission.created_at.localtime.to_s(:db) %></td>
+    <td><%= link_to 'Details', submission %></td>
+    <td><%= link_to 'Remove', submission, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
-
-<br />
-
-<%= link_to 'New submission', new_submission_path %>

@@ -65,7 +65,7 @@ class Submission < ActiveRecord::Base
             
             else
             
-              concurrent_iterator :merge_type => 'isolate', :on_val => "#{in_files.join(',')}", :to_var => 'v' do
+              concurrent_iterator :merge_type => 'isolate', :on_val => "${f:previous_output_files_joined}", :to_var => 'v' do
 
                 qips_node :command => '/worker/start_work', :input_files => '${v:v}', 
                 :executable => "#{t.executable}", :exec_timeout => "#{t.protocol.process_timeout}",
