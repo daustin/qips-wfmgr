@@ -26,3 +26,5 @@ config.action_view.cache_template_loading            = true
 
 # Enable threaded mode
 # config.threadsafe!
+
+RMGR_CMD = 'curl --basic -u "admin:admin" http://localhost:3000/'

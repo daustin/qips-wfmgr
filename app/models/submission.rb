@@ -2,7 +2,9 @@ class Submission < ActiveRecord::Base
   
   has_many :tasks, :order => :rank
   serialize :input_files
+  serialize :process_definition
   
+  before_save :generate_vars
   after_save :submit_job
 
   def task_attributes=(task_attributes)
@@ -17,16 +19,22 @@ class Submission < ActiveRecord::Base
     end
   end
   
-  def submit_job
-
+  
+  # generates vars before save
+  def generate_vars
     self.submission_tag = Time.now.to_i
-    
     pdef = generate_process_definition
+    self.process_definition = pdef
+  end
+  
+  
+  
+  def submit_job
 
     # Create temp folder on S3
     
     RuoteAMQP::WorkitemListener.new(RuoteKit.engine)
-    wfid = RuoteKit.engine.launch(pdef)
+    wfid = RuoteKit.engine.launch(self.process_definition)
     # Ruote.engine.wait_for(wfid)
 
     
@@ -46,63 +54,45 @@ class Submission < ActiveRecord::Base
     pdef = Ruote.process_definition do
       sequence do
         
+        #first init vars
+        init_vars :input_files => "#{in_files.join(',')}"
+        
         # now process each task, concurrently if needed
         
         task_array.each do |t|
 
           if t.protocol.run_concurrent
+                            
+              wait_for :time => 60 unless count == 0
             
-            if count < 1
-              concurrent_iterator :merge_type => 'isolate', :on_val => "#{in_files.join(',')}", :to_var => 'v' do
-
-                qips_node :command => '/worker/start_work', :input_files => '${v:v}', 
-                :executable => "#{t.executable}", :exec_timeout => "#{t.protocol.process_timeout}",
-                :args => "#{t.args}", :queue => "#{t.protocol.queue}", :output_folder => "#{out_folder}"
-
-              end
-              
-              merge_outputs
-            
-            else
+              request_nodes :num_nodes => "${f:previous_output_files_size}"
             
               concurrent_iterator :merge_type => 'isolate', :on_val => "${f:previous_output_files_joined}", :to_var => 'v' do
 
                 qips_node :command => '/worker/start_work', :input_files => '${v:v}', 
-                :executable => "#{t.executable}", :exec_timeout => "#{t.protocol.process_timeout}",
+                :executable => "#{t.executable}", :exec_timeout => "#{t.protocol.process_timeout}", :pass_filenames => "#{t.protocol.pass_filenames}", 
                 :args => "#{t.args}", :queue => "#{t.protocol.queue}", :output_folder => "#{out_folder}"
 
               end
     
               merge_outputs
-            
-            end
-      
+
             
           else
             
-            if count < 1
-            
-              qips_node :command => '/worker/start_work', :input_files => "#{in_files.join(',')}",
-              :executable => "#{t.executable}", :exec_timeout => "#{t.protocol.process_timeout}",
-              :args => "#{t.args}", :queue => "#{t.protocol.queue}", :output_folder => "#{out_folder}"
+            wait_for :time => 60 unless count == 0
 
-              rename_outputs
+            request_nodes :num_nodes => "1"
 
-            else
-            
-            
-              qips_node :command => '/worker/start_work', :input_files => "${f:previous_output_files_joined}",
-              :executable => "#{t.executable}", :exec_timeout => "#{t.protocol.process_timeout}",
-              :args => "#{t.args}", :queue => "#{t.protocol.queue}", :output_folder => "#{out_folder}"
+            qips_node :command => '/worker/start_work', :input_files => "${f:previous_output_files_joined}",
+            :executable => "#{t.executable}", :exec_timeout => "#{t.protocol.process_timeout}", :pass_filenames => "#{t.protocol.pass_filenames}", 
+            :args => "#{t.args}", :queue => "#{t.protocol.queue}", :output_folder => "#{out_folder}"
 
-              rename_outputs
-            
-            end
+            rename_outputs
             
           end
           
-        
-        count += 1  
+        count += 1
         end
         
         console

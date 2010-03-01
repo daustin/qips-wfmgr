@@ -20,7 +20,9 @@ RuoteKit.engine.register_participant(/qips_node.*/, RuoteAMQP::Participant)
 RuoteKit.engine.register_participant(/console/, Ruote::ConsoleParticipant)
 RuoteKit.engine.register_participant(/merge_outputs/, Ruote::MergeOutputsParticipant)
 RuoteKit.engine.register_participant(/rename_outputs/, Ruote::RenameOutputsParticipant)
-
+RuoteKit.engine.register_participant(/init_vars/, Ruote::InitVarsParticipant)
+RuoteKit.engine.register_participant(/wait_for/, Ruote::SleeperParticipant)
+RuoteKit.engine.register_participant(/request_nodes/, Ruote::RmgrRequestParticipant)
 
 
 # Register the catchall participant (named '.*') if needed

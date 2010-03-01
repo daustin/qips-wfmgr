@@ -18,7 +18,7 @@ class SubmissionsController < ApplicationController
     @submission = Submission.find(params[:id])
     
     #now lets get the nice xml to display!
-    xml = Ruote::Parser.to_xml(@submission.generate_process_definition)
+    xml = Ruote::Parser.to_xml(@submission.process_definition)
     doc = REXML::Document.new xml
     @nice_xml = ''
     doc.write(@nice_xml,2)

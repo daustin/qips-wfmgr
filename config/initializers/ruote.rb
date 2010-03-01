@@ -57,6 +57,7 @@ module Ruote
       
       workitem.fields['previous_output_files'] = previous_output_files
       workitem.fields['previous_output_files_joined'] =  previous_output_files.join(',')
+      workitem.fields['previous_output_files_size'] = previous_output_files.size
 
       reply_to_engine(workitem)
     end
@@ -87,6 +88,7 @@ module Ruote
       
       workitem.fields['previous_output_files'] = previous_output_files
       workitem.fields['previous_output_files_joined'] =  previous_output_files.join(',')
+      workitem.fields['previous_output_files_size'] = previous_output_files.size
       
       reply_to_engine(workitem) 
     end
@@ -96,6 +98,84 @@ module Ruote
     end
   end
 
+  # simple shuffles a couple vars around so the rest of the workflow can use them
+  class InitVarsParticipant
+    include LocalParticipant
+ 
+    attr_accessor :context
+ 
+    def initialize(opts)
+      @opts = opts
+    end
+ 
+    def consume(workitem)
+      previous_output_files = Array.new
+
+      ActionController::Base.logger.info("Init Vars: \n#{workitem.to_h.inspect}")
+
+      previous_output_files = workitem.fields['params']['input_files'].split(',') unless  workitem.fields['params']['input_files'].nil?
+      workitem.fields['previous_output_files'] = previous_output_files
+      workitem.fields['previous_output_files_joined'] =  previous_output_files.join(',')
+      workitem.fields['previous_output_files_size'] = previous_output_files.size
+      
+      reply_to_engine(workitem) 
+    end
+ 
+    def cancel (fei, flavour)
+      # do nothing
+    end
+  end
+  
+  # requests nodes from rmgr
+  class RmgrRequestParticipant
+    include LocalParticipant
+ 
+    attr_accessor :context
+ 
+    def initialize(opts)
+      @opts = opts
+    end
+ 
+    def consume(workitem)
+      ActionController::Base.logger.info("Rmgr Request Participant: \n#{workitem.to_h.inspect}")
+      
+      num_nodes = workitem.fields['params']['num_nodes'] ||= 1
+      
+      out = `#{RMGR_CMD}#{num_nodes}`
+      
+      reply_to_engine(workitem)
+    end
+ 
+    def cancel (fei, flavour)
+      # do nothing
+    end
+  end
+  
+  # sleeps  
+  class SleeperParticipant
+    include LocalParticipant
+ 
+    attr_accessor :context
+ 
+    def initialize(opts)
+      @opts = opts
+    end
+ 
+    def consume(workitem)
+      ActionController::Base.logger.info("Sleeper Participant: \n#{workitem.to_h.inspect}")
+
+      seconds = workitem.fields['params']['time'] ||= 10
+      puts "Sleeper is sleeping for #{seconds} seconds... "
+      sleep seconds
+
+      reply_to_engine(workitem)
+    end
+ 
+    def cancel (fei, flavour)
+      # do nothing
+    end
+  end
+  
   
   class ConsoleParticipant
     include LocalParticipant
