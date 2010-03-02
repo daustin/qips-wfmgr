@@ -141,7 +141,15 @@ module Ruote
       
       num_nodes = workitem.fields['params']['num_nodes'] ||= 1
       
-      out = `#{RMGR_CMD}#{num_nodes}`
+      out = `#{RMGR_CMD}#{num_nodes}.xml`
+      
+      unless out =~ /201 Created/
+        #throw error!
+        raise 'poop'
+        #workitem.fields['success'] = 'false'
+        #workitem.fields['error'] = 'Could not start nodes!'
+                
+      end
       
       reply_to_engine(workitem)
     end
