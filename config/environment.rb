@@ -18,8 +18,8 @@ Rails::Initializer.run do |config|
   # config.gem "bj"
   # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
   config.gem "sqlite3-ruby", :lib => "sqlite3"
-  config.gem "ruote", :version => '2.1.4'
-  config.gem "ruote-amqp", :version => '2.1.4pre'
+  config.gem "ruote", :version => '2.1.7'
+  config.gem "ruote-amqp", :version => '2.1.5'
   config.gem 'ruote-kit'
   config.gem 'sinatra', :version => '0.9.4'
   # config.gem 'sinatra-respond_to', :version => '0.4.0'
