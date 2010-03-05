@@ -6,6 +6,9 @@ RAILS_GEM_VERSION = '2.3.4' unless defined? RAILS_GEM_VERSION
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
+#get AWS creds for s3
+require File.join(File.dirname(__FILE__), 'aws')
+
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence over those specified here.
   # Application configuration should go into files in config/initializers
@@ -23,6 +26,8 @@ Rails::Initializer.run do |config|
   config.gem 'ruote-kit'
   config.gem 'sinatra', :version => '0.9.4'
   # config.gem 'sinatra-respond_to', :version => '0.4.0'
+  # config.gem 'erubis'
+  # config.gem 'right_aws'
   config.middleware.use 'RuoteKit::Application'
   
   # config.gem "aws-s3", :lib => "aws/s3"

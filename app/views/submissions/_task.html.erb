@@ -6,7 +6,7 @@
 <p> <b><%= task.protocol.name %></b></p>
 <%= t.hidden_field :protocol_id, :value => task.protocol_id %>
 <%= t.hidden_field :rank, :value => task.rank %>
-<%= t.hidden_field :params_url, :value => task.protocol.params_filename %>
+<%= t.hidden_field :params_url, :value => task.protocol.params_filename ||= '' %>
 <p>Executable: <%= t.text_field :executable, :value => task.protocol.executable, :readonly => true %> 
 	Args: <%= t.text_field :args, :value => task.protocol.default_args %> 
 	<% if task.protocol.pass_filenames %>

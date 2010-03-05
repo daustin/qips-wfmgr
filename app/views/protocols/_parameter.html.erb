@@ -6,14 +6,14 @@ parameter.id = nil
 <tr>
   <th><%= pf.label :pretty_name %></th><th><%= pf.label :var_name %></th>
   <th><%= pf.label :description %></th><th><%= pf.label :field_type %></th><th><%= pf.label :initial_value %></th>
-  <th><%= pf.label :value_hash %></th><th><%= pf.label :remote_value %></th>
+  <th><%= pf.label :value_options %> (csv)</th><th><%= pf.label :remote_value_options %></th>
   <th>Del</th>
 </tr>
 
 <tr>
   <td><%= pf.text_field :pretty_name, :size => 12 %></td><td><%= pf.text_field :var_name, :size => 12 %></td>
   <td><%= pf.text_field :description %></td><td><%= pf.select :field_type, ['text','check_box', 'radio_box', 'select']  %></td><td><%= pf.text_field :initial_value, :size => 10 %></td>
-  <td><%= pf.text_field :value_hash %></td><td><%= pf.text_field :remote_value %></td>
+  <td><%= pf.text_field :value_options %></td><td><%= pf.text_field :remote_value_options %></td>
 
 <td>
 <%= link_to_function "X", "this.up('.parameter').remove()" %>

@@ -17,3 +17,6 @@ config.action_controller.perform_caching             = false
 config.action_mailer.raise_delivery_errors = false
 
 RMGR_CMD = "curl -I --basic -u 'admin:admin' http://localhost:3001/farms/start_compute_instances/"
+
+#scratch space for s3
+S3_SCRATCH_SPACE = "daustin-test:qips_scratch/"

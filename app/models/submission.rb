@@ -8,6 +8,8 @@ class Submission < ActiveRecord::Base
   after_save :submit_job
 
   def task_attributes=(task_attributes)
+    puts task_attributes.inspect
+    
     task_attributes.each do |attributes|
       tasks.build(attributes)
     end
@@ -60,7 +62,8 @@ class Submission < ActiveRecord::Base
         # now process each task, concurrently if needed
         
         task_array.each do |t|
-
+          t.save
+          t.reload
           if t.protocol.run_concurrent
                             
               wait_for :time => 60 unless count == 0
@@ -69,7 +72,7 @@ class Submission < ActiveRecord::Base
             
               concurrent_iterator :merge_type => 'isolate', :on_val => "${f:previous_output_files_joined}", :to_var => 'v' do
 
-                qips_node :command => '/worker/start_work', :input_files => '${v:v}', 
+                qips_node :command => '/worker/start_work', :input_files => '${v:v}', :params_file => "#{t.params_url}",
                 :executable => "#{t.executable}", :exec_timeout => "#{t.protocol.process_timeout}", :pass_filenames => "#{t.protocol.pass_filenames}", 
                 :args => "#{t.args}", :queue => "#{t.protocol.queue}", :output_folder => "#{out_folder}"
 
@@ -84,7 +87,7 @@ class Submission < ActiveRecord::Base
 
             request_nodes :num_nodes => "1"
 
-            qips_node :command => '/worker/start_work', :input_files => "${f:previous_output_files_joined}",
+            qips_node :command => '/worker/start_work', :input_files => "${f:previous_output_files_joined}", :params_file => "#{t.params_url}",
             :executable => "#{t.executable}", :exec_timeout => "#{t.protocol.process_timeout}", :pass_filenames => "#{t.protocol.pass_filenames}", 
             :args => "#{t.args}", :queue => "#{t.protocol.queue}", :output_folder => "#{out_folder}"
 

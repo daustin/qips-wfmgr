@@ -24,8 +24,13 @@
 	</p>
 	<p>
 	  <pre><%=h t.executable %> <%=h t.args %></pre>
-	</p>	
-
+	</p>
+	<% unless t.params_url.blank? %>
+	<p><b>Params File:</b><BR><BR>
+		<%= t.params_url %><BR><BR>
+		<%= text_area_tag 'params', t.params_contents,  :size => '50x20' %>
+    </p>
+	<% end -%>
   <% end %>
   </blockquote>
 
