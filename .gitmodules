@@ -1,3 +1,0 @@
-[submodule "vendor/plugins/ruote-kit"]
-	path = vendor/plugins/ruote-kit
-	url = git://github.com/tosch/ruote-kit.git
