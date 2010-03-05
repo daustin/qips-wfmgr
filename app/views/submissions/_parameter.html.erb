@@ -1,0 +1,23 @@
+<% fields_for "submission[task_attributes][param_values]", parameter do |p|
+	
+%>	
+<p>	
+<% case parameter.field_type  when 'text' %>
+
+<%= parameter.pretty_name %>: <%= p.text_field parameter.var_name, :value => parameter.initial_value %> 
+
+<% when 'check_box' %>
+
+<%= parameter.pretty_name %>: <%= check_box_tag "submission[task_attributes][param_values][#{parameter.var_name}]" %>
+
+<% when 'radio_box' %>
+test radio
+<% when 'select' %>
+	tes select
+<% else %>
+	
+<% end%>
+</p>	
+
+<% end %>
+ 
