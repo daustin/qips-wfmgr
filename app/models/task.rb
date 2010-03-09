@@ -21,10 +21,7 @@ class Task < ActiveRecord::Base
       
       prefix = "#{S3_SCRATCH_SPACE.chomp('/')}/#{Time.now.to_f}"
       basename = params_url.strip
-      puts "BASENEME #{basename}"
-      puts "URL #{self.params_url}"
-      self.params_url = "#{prefix}/#{params_url}" unless basename.blank?
-      puts "URL #{self.params_url}"
+      self.params_url = "#{prefix}/#{params_url}" unless params_url =~ /#{S3_SCRATCH_SPACE}/
       # now lets do the tough erb translation
       eruby = Erubis::Eruby.new(protocol.params_template)
       self.params_contents = eruby.result(:values => param_values)
