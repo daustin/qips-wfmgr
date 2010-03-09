@@ -28,3 +28,6 @@ config.action_mailer.delivery_method = :test
 # config.active_record.schema_format = :sql
 
 RMGR_CMD = 'curl --basic -u "admin:admin" http://localhost:3000/'
+
+#scratch space for s3
+S3_SCRATCH_SPACE = "daustin-test:qips_scratch/"

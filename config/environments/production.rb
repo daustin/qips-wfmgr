@@ -28,3 +28,7 @@ config.action_view.cache_template_loading            = true
 # config.threadsafe!
 
 RMGR_CMD = "curl -I --basic -u 'admin:admin' http://aws.itmat.upenn.edu/qips-rmgr-web/farms/start_compute_instances/"
+
+#scratch space for s3
+S3_SCRATCH_SPACE = "daustin-test:qips_scratch/"
+
