@@ -35,7 +35,7 @@ class Submission < ActiveRecord::Base
 
     # Create temp folder on S3
     
-    RuoteAMQP::WorkitemListener.new(RuoteKit.engine)
+    # RuoteAMQP::WorkitemListener.new(RuoteKit.engine)
     wfid = RuoteKit.engine.launch(self.process_definition)
     # Ruote.engine.wait_for(wfid)
 
@@ -66,7 +66,7 @@ class Submission < ActiveRecord::Base
           t.reload
           if t.protocol.run_concurrent
                             
-              wait_for :time => 60 unless count == 0
+              wait_for :time => PROCESS_WAIT_TIME unless count == 0
             
               request_nodes :num_nodes => "${f:previous_output_files_size}"
             
@@ -83,7 +83,7 @@ class Submission < ActiveRecord::Base
             
           else
             
-            wait_for :time => 60 unless count == 0
+            wait_for :time => PROCESS_WAIT_TIME unless count == 0
 
             request_nodes :num_nodes => "1"
 

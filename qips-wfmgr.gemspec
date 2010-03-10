@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{qips-wfmgr}
-  s.version = "0.2.1"
+  s.version = "0.2.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Dave Austin", "Andrew Brader"]
@@ -109,6 +109,12 @@ Gem::Specification.new do |s|
      "doc/README_FOR_APP",
      "lib/s3_helper.rb",
      "lib/tasks/ruote_kit.rake",
+     "pkg/qips-wfmgr-0.1.0.gem",
+     "pkg/qips-wfmgr-0.1.1.gem",
+     "pkg/qips-wfmgr-0.1.2.gem",
+     "pkg/qips-wfmgr-0.1.3.gem",
+     "pkg/qips-wfmgr-0.2.0.gem",
+     "pkg/qips-wfmgr-0.2.1.gem",
      "public/404.html",
      "public/422.html",
      "public/500.html",
@@ -117,7 +123,6 @@ Gem::Specification.new do |s|
      "public/images/handoff.jpg",
      "public/images/qips.png",
      "public/images/rails.png",
-     "public/index.html",
      "public/javascripts/SimplyButtons.js",
      "public/javascripts/application.js",
      "public/javascripts/controls.js",
@@ -131,6 +136,7 @@ Gem::Specification.new do |s|
      "public/robots.txt",
      "public/stylesheets/application.css",
      "public/stylesheets/scaffold.css",
+     "qips-wfmgr.gemspec",
      "script/about",
      "script/console",
      "script/dbconsole",

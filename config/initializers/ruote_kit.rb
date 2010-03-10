@@ -24,6 +24,7 @@ RuoteKit.engine.register_participant(/init_vars/, Ruote::InitVarsParticipant)
 RuoteKit.engine.register_participant(/wait_for/, Ruote::SleeperParticipant)
 RuoteKit.engine.register_participant(/request_nodes/, Ruote::RmgrRequestParticipant)
 
+RuoteAMQP::WorkitemListener.new(RuoteKit.engine)
 
 # Register the catchall participant (named '.*') if needed
 RuoteKit.configure_catchall!

@@ -20,3 +20,6 @@ RMGR_CMD = "curl -I --basic -u 'admin:admin' http://localhost:3001/farms/start_c
 
 #scratch space for s3
 S3_SCRATCH_SPACE = "daustin-test:qips_scratch/"
+
+# how long wfmgr waits between executing each task.  set to at least 60 seconds in production for use wih qips-node
+PROCESS_WAIT_TIME = 5
