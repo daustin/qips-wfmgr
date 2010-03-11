@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{qips-wfmgr}
-  s.version = "0.2.2"
+  s.version = "0.2.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Dave Austin", "Andrew Brader"]
-  s.date = %q{2010-03-09}
+  s.date = %q{2010-03-10}
   s.default_executable = %q{static_workflow_test.rb}
   s.description = %q{Workflow Manager is in charge of creating, submitting, and tracking custom workflows.}
   s.email = %q{daustin@mail.med.upenn.edu}
@@ -115,6 +115,7 @@ Gem::Specification.new do |s|
      "pkg/qips-wfmgr-0.1.3.gem",
      "pkg/qips-wfmgr-0.2.0.gem",
      "pkg/qips-wfmgr-0.2.1.gem",
+     "pkg/qips-wfmgr-0.2.2.gem",
      "public/404.html",
      "public/422.html",
      "public/500.html",

@@ -20,7 +20,7 @@
   <blockquote>
   <% @submission.tasks.each do |t|%>
 
-	<p><b><%=h t.rank %> - <%=h t.protocol.name %></b>
+	<p><b><%=h t.rank %> - <%=h t.name %></b>
 	</p>
 	<p>
 	  <pre><%=h t.executable %> <%=h t.args %></pre>

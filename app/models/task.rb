@@ -6,8 +6,10 @@ class Task < ActiveRecord::Base
   belongs_to :protocol
     
   serialize :param_values
+  serialize :aux_files
 
   before_save :generate_vars #do erb translation, generate params_url from timestamp
+
 
   def param_values_attributes=(param_values_attributes)
     

@@ -1,6 +1,6 @@
 class Submission < ActiveRecord::Base
   
-  has_many :tasks, :order => :rank
+  has_many :tasks, :order => :rank, :dependent => :destroy
   serialize :input_files
   serialize :process_definition
   
@@ -14,13 +14,7 @@ class Submission < ActiveRecord::Base
       tasks.build(attributes)
     end
   end
-  
-  def input_file_list=(list)
-    list.each do |path|
-      input_files << path
-    end
-  end
-  
+
   
   # generates vars before save
   def generate_vars
@@ -74,7 +68,7 @@ class Submission < ActiveRecord::Base
 
                 qips_node :command => '/worker/start_work', :input_files => '${v:v}', :params_file => "#{t.params_url}",
                 :executable => "#{t.executable}", :exec_timeout => "#{t.protocol.process_timeout}", :pass_filenames => "#{t.protocol.pass_filenames}", 
-                :args => "#{t.args}", :queue => "#{t.protocol.queue}", :output_folder => "#{out_folder}"
+                :aux_files => "#{t.aux_files.join(',') unless t.aux_files.nil?}", :args => "#{t.args}", :queue => "#{t.protocol.queue}", :output_folder => "#{out_folder}"
 
               end
     
@@ -89,7 +83,7 @@ class Submission < ActiveRecord::Base
 
             qips_node :command => '/worker/start_work', :input_files => "${f:previous_output_files_joined}", :params_file => "#{t.params_url}",
             :executable => "#{t.executable}", :exec_timeout => "#{t.protocol.process_timeout}", :pass_filenames => "#{t.protocol.pass_filenames}", 
-            :args => "#{t.args}", :queue => "#{t.protocol.queue}", :output_folder => "#{out_folder}"
+            :aux_files => "#{t.aux_files.join(',') unless t.aux_files.nil?}", :args => "#{t.args}", :queue => "#{t.protocol.queue}", :output_folder => "#{out_folder}"
 
             rename_outputs
             
