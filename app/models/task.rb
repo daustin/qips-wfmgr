@@ -19,14 +19,15 @@ class Task < ActiveRecord::Base
   
   def generate_vars
     #first lets generate the params url
-    unless params_url.blank? || param_values.empty?
+    unless params_url.blank?
       
       prefix = "#{S3_SCRATCH_SPACE.chomp('/')}/#{Time.now.to_f}"
       basename = params_url.strip
       self.params_url = "#{prefix}/#{params_url}" unless params_url =~ /#{S3_SCRATCH_SPACE}/
       # now lets do the tough erb translation
+      value_hash = param_values ||= Hash.new
       eruby = Erubis::Eruby.new(protocol.params_template)
-      self.params_contents = eruby.result(:values => param_values)
+      self.params_contents = eruby.result(:values => value_hash)
     
       # done now lets upload
     
