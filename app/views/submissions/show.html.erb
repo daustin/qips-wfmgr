@@ -1,5 +1,11 @@
 <h2>Submission <%=h @submission.id %></h2>
-<b>Created at:</b> <%=h @submission.created_at.localtime.to_s(:db) %>
+<p>
+  <b>Ruote ID:</b>
+  <%=h @submission.fei_wfid %>
+</p>
+
+<p><b>Created at:</b> <%=h @submission.created_at.localtime.to_s(:db) %></p>
+
 
 <p>
   <b>Owner:</b>
@@ -18,6 +24,8 @@
 
   <b>Tasks:</b>
   <blockquote>
+	<table border="1" cellpadding="5" cellspacing="0" width="100%"><tr>
+		<td valign="top">
   <% @submission.tasks.each do |t|%>
 
 	<p><b><%=h t.rank %> - <%=h t.name %></b>
@@ -28,10 +36,17 @@
 	<% unless t.params_url.blank? %>
 	<p><b>Params File:</b><BR><BR>
 		<%= t.params_url %><BR><BR>
-		<%= text_area_tag 'params', t.params_contents,  :size => '50x20' %>
+		<%= text_area_tag 'params', t.params_contents,  :size => '70x20' %>
     </p>
 	<% end -%>
   <% end %>
+	</td>
+	<td valign="top">
+		<p><b>Current Output:</b>
+		</p>
+		<%= text_area_tag 'output', @task_outputs, :size => '70x30' %>
+	</td>
+	</tr></table>
   </blockquote>
 
 </p>

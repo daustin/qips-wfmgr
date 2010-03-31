@@ -24,6 +24,11 @@ module Ruote
     end
   end
   
+  ############################################
+  #
+  #  Merges output_files, results, and errors from concurrent processes
+  #
+  
   class MergeOutputsParticipant
     include LocalParticipant
  
@@ -35,6 +40,9 @@ module Ruote
  
     def consume(workitem)
       previous_output_files = Array.new
+      exec_outputs = ''
+      exec_errors = ''
+      
       ActionController::Base.logger.info("Merge Participant: \n#{workitem.to_h.inspect}")
 
       # Add files
@@ -42,8 +50,10 @@ module Ruote
       i = 0
       until (workitem.fields[i.to_s].nil?)
         v = workitem.fields[i.to_s]['output_files']
-        previous_output_files = previous_output_files.concat(v)
-        puts "Added #{v}"
+        previous_output_files = previous_output_files.concat(v) unless v.nil?
+        puts "Added #{v}" unless v.nil?
+        exec_outputs += "#{workitem.fields[i.to_s]['result']}\n" unless workitem.fields[i.to_s]['result'].nil?
+        exec_errors += "#{workitem.fields[i.to_s]['error']}\n" unless workitem.fields[i.to_s]['error'].nil?
         i = i + 1
       end
       
@@ -59,6 +69,14 @@ module Ruote
       workitem.fields['previous_output_files_joined'] =  previous_output_files.join(',')
       workitem.fields['previous_output_files_size'] = previous_output_files.size
 
+      ######################
+      # Update task model
+      unless workitem.fields['params'].nil? || workitem.fields['params']['task_id'].nil?
+        Task.update(workitem.fields['params']['task_id'].to_i, :exec_output => exec_outputs, :exec_error => exec_errors)
+      end
+
+      raise exec_errors unless exec_errors.empty?
+
       reply_to_engine(workitem)
     end
  
@@ -66,6 +84,11 @@ module Ruote
       # do nothing
     end
   end
+
+  ##########################
+  #
+  # Renames previous outputs, collects, exec outputs and errors and populates task
+  #
 
   class RenameOutputsParticipant
     include LocalParticipant
@@ -82,14 +105,25 @@ module Ruote
 
       previous_output_files = workitem.fields['output_files'] unless  workitem.fields['output_files'].nil?
 
-      # again, cleanup
+      unless workitem.fields['params'].nil? || workitem.fields['params']['task_id'].nil?
+        Task.update(workitem.fields['params']['task_id'].to_i, :exec_output => "#{workitem.fields['result']}") unless workitem.fields['result'].nil?
+        Task.update(workitem.fields['params']['task_id'].to_i, :exec_error => "#{workitem.fields['error']}") unless workitem.fields['error'].nil?
+        
+      end
 
-      workitem.fields.delete 'output_files'
+
+      # again, cleanup
       
       workitem.fields['previous_output_files'] = previous_output_files
       workitem.fields['previous_output_files_joined'] =  previous_output_files.join(',')
       workitem.fields['previous_output_files_size'] = previous_output_files.size
-      
+
+      raise workitem.fields['error'] unless workitem.fields['error'].nil?
+
+      workitem.fields.delete 'output_files'
+      workitem.fields.delete 'exec_output'
+      workitem.fields.delete 'exec_error'
+
       reply_to_engine(workitem) 
     end
  

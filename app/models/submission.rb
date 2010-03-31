@@ -3,9 +3,6 @@ class Submission < ActiveRecord::Base
   has_many :tasks, :order => :rank, :dependent => :destroy
   serialize :input_files
   serialize :process_definition
-  
-  before_save :generate_vars
-  after_save :submit_job
 
   def task_attributes=(task_attributes)
     puts task_attributes.inspect
@@ -14,25 +11,19 @@ class Submission < ActiveRecord::Base
       tasks.build(attributes)
     end
   end
-
-  
-  # generates vars before save
-  def generate_vars
-    self.submission_tag = Time.now.to_i
-    pdef = generate_process_definition
-    self.process_definition = pdef
-  end
-  
-  
   
   def submit_job
 
-    # Create temp folder on S3
+    pdef = generate_process_definition
+    self.process_definition = pdef
     
     # RuoteAMQP::WorkitemListener.new(RuoteKit.engine)
     wfid = RuoteKit.engine.launch(self.process_definition)
     # Ruote.engine.wait_for(wfid)
 
+    self.fei_wfid = wfid
+
+    save
     
   end
   
@@ -72,7 +63,7 @@ class Submission < ActiveRecord::Base
 
               end
     
-              merge_outputs
+              merge_outputs :task_id => "#{t.id}"
 
             
           else
@@ -84,8 +75,9 @@ class Submission < ActiveRecord::Base
             qips_node :command => '/worker/start_work', :input_files => "${f:previous_output_files_joined}", :params_file => "#{t.params_url}",
             :executable => "#{t.executable}", :exec_timeout => "#{t.protocol.process_timeout}", :pass_filenames => "#{t.protocol.pass_filenames}", 
             :aux_files => "#{t.aux_files.join(',') unless t.aux_files.nil?}", :args => "#{t.args}", :queue => "#{t.protocol.queue}", :output_folder => "#{out_folder}"
+            
 
-            rename_outputs
+            rename_outputs :task_id => "#{t.id}"
             
           end
           

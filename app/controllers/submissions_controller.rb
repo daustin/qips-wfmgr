@@ -22,8 +22,11 @@ class SubmissionsController < ApplicationController
     doc = REXML::Document.new xml
     @nice_xml = ''
     doc.write(@nice_xml,2)
-
-
+    @task_outputs = ''
+    @submission.tasks.each do|t|
+      @task_outputs += "\n== #{t.rank} - #{t.name} =====================\n\n"
+      @task_outputs += "#{t.exec_output}\n"
+    end
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @submission }
@@ -60,6 +63,7 @@ class SubmissionsController < ApplicationController
 
     respond_to do |format|
       if @submission.save
+        @submission.submit_job
         flash[:notice] = 'Submission was successfully created.'
         format.html { redirect_to(@submission) }
         format.xml  { render :xml => @submission, :status => :created, :location => @submission }
