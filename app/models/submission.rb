@@ -12,6 +12,43 @@ class Submission < ActiveRecord::Base
     end
   end
   
+  ###############################################
+  #
+  #  fetches the ruote process associated with this submissions wfid
+  #  returns the latest error from that  process, or nil
+  #
+
+  def get_last_error
+    
+    return nil if self.fei_wfid.nil?
+    
+    process = nil
+    
+    p_array = RuoteKit.engine.processes
+    
+    p_array.each do |p|
+      #find the process 
+      process = p if p.wfid.eql?(self.fei_wfid)
+      
+      
+    end
+    
+    if process.nil? || process.errors.nil? || process.errors.empty?
+      return nil
+    else
+      return process.errors[0].message
+    end
+        
+  end
+  
+  
+  
+  
+  ######################################################
+  #
+  #  submits the submissions process definition to ruote and saves the wfid in submission
+  #
+  
   def submit_job
 
     pdef = generate_process_definition
@@ -26,6 +63,11 @@ class Submission < ActiveRecord::Base
     save
     
   end
+  
+  #######################################
+  #
+  #  generates a ruote process definition based on submission and its tasks
+  #
   
   
   def generate_process_definition

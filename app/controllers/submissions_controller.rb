@@ -27,6 +27,11 @@ class SubmissionsController < ApplicationController
       @task_outputs += "\n== #{t.rank} - #{t.name} =====================\n\n"
       @task_outputs += "#{t.exec_output}\n"
     end
+    
+    @error = @submission.get_last_error ? @submission.get_last_error : "None"
+    
+    flash[:notice] = "There appears to be an error in the workflow. Please contact your system administrator." unless @error.eql?("None")
+    
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @submission }

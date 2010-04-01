@@ -6,6 +6,10 @@
 
 <p><b>Created at:</b> <%=h @submission.created_at.localtime.to_s(:db) %></p>
 
+<p>
+  <b>Current Errors:</b>
+  <PRE><%=h @error %></PRE>
+</p>
 
 <p>
   <b>Owner:</b>
@@ -52,24 +56,27 @@
 </p>
 
 <p>
-	<b>Process Definition:<BR><BR></b>
+	<b>Process Definition:</b>
+	<blockquote>
+		<table border="0" cellpadding="5" cellspacing="0" width="100%"><tr>
+			<td valign="top">
+				<canvas id='fluo'></canvas>
+			   <script type='text/javascript'>
+				                  //<![CDATA[
+				                    var proc_rep = <%= @submission.process_definition.to_json -%>;
+				                    FluoCan.renderFlow( 'fluo', proc_rep );
+				                    FluoCan.crop('fluo');
+				                  //]]>
+				</script>
+			
 
-	    <%= text_area_tag 'xml', @nice_xml, :size => '100x25' %>
-
-	
-</p>
-
-<p>
-	<b>MAP:<BR><BR></b>
-		<canvas id='fluo'></canvas>
-	   <script type='text/javascript'>
-		                  //<![CDATA[
-		                    var proc_rep = <%= @submission.process_definition.to_json -%>;
-		                    FluoCan.renderFlow( 'fluo', proc_rep );
-		                    FluoCan.crop('fluo');
-		                  //]]>
-		</script>
-
+		</td>
+		<td valign="top">
+			<%= text_area_tag 'xml', @nice_xml, :size => '70x40' %>
+			
+		</td>
+		</tr></table>
+	</blockquote>	
 	
 </p>
 
