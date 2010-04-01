@@ -28,9 +28,7 @@ class SubmissionsController < ApplicationController
       @task_outputs += "#{t.exec_output}\n"
     end
     
-    @error = @submission.get_last_error ? @submission.get_last_error : "None found"
-    
-    flash[:error] = "There appears to be an error in the workflow. Please contact your system administrator." unless @error.eql?("None found")
+    flash[:error] = "Your submission appears to have an error and is probably stuck. Please contact your system administrator." if (! @submission.last_error.blank? && @submission.active?)
     
     respond_to do |format|
       format.html # show.html.erb

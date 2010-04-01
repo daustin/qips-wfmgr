@@ -18,9 +18,9 @@ class Submission < ActiveRecord::Base
   #  returns the latest error from that  process, or nil
   #
 
-  def get_last_error
+  def active?
     
-    return nil if self.fei_wfid.nil?
+    return false if self.fei_wfid.nil?
     
     process = nil
     
@@ -33,10 +33,10 @@ class Submission < ActiveRecord::Base
       
     end
     
-    if process.nil? || process.errors.nil? || process.errors.empty?
-      return nil
+    if process.nil? 
+      return false
     else
-      return process.errors[0].message
+      return true
     end
         
   end

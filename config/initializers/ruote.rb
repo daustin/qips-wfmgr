@@ -53,6 +53,7 @@ module Ruote
         previous_output_files = previous_output_files.concat(v) unless v.nil?
         puts "Added #{v}" unless v.nil?
         exec_outputs += "#{workitem.fields[i.to_s]['result']}\n" unless workitem.fields[i.to_s]['result'].nil?
+        exec_outputs += "#{workitem.fields[i.to_s]['error']}\n\n" unless workitem.fields[i.to_s]['error'].nil? # also put errors in output
         exec_errors += "#{workitem.fields[i.to_s]['error']}\n" unless workitem.fields[i.to_s]['error'].nil?
         i = i + 1
       end
@@ -72,7 +73,10 @@ module Ruote
       ######################
       # Update task model
       unless workitem.fields['params'].nil? || workitem.fields['params']['task_id'].nil?
-        Task.update(workitem.fields['params']['task_id'].to_i, :exec_output => exec_outputs, :exec_error => exec_errors)
+        Task.update(workitem.fields['params']['task_id'].to_i, :exec_output => exec_outputs)
+        s = Task.find(workitem.fields['params']['task_id'].to_i).submission
+        s.last_error = exec_errors unless exec_errors.empty?
+        s.save
       end
 
       raise exec_errors unless exec_errors.empty?
@@ -106,9 +110,11 @@ module Ruote
       previous_output_files = workitem.fields['output_files'] unless  workitem.fields['output_files'].nil?
 
       unless workitem.fields['params'].nil? || workitem.fields['params']['task_id'].nil?
-        Task.update(workitem.fields['params']['task_id'].to_i, :exec_output => "#{workitem.fields['result']}") unless workitem.fields['result'].nil?
-        Task.update(workitem.fields['params']['task_id'].to_i, :exec_error => "#{workitem.fields['error']}") unless workitem.fields['error'].nil?
-        
+        Task.update(workitem.fields['params']['task_id'].to_i, :exec_output => "#{workitem.fields['result']}\n#{workitem.fields['error']}\n") unless workitem.fields['result'].nil?
+        # Task.update(workitem.fields['params']['task_id'].to_i, :exec_error => "#{workitem.fields['error']}") unless workitem.fields['error'].nil? #deprecated
+        s = Task.find(workitem.fields['params']['task_id'].to_i).submission
+        s.last_error = workitem.fields['error'] unless workitem.fields['error'].nil?
+        s.save
       end
 
 

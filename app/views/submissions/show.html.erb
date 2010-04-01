@@ -1,4 +1,4 @@
-<h2>Submission <%=h @submission.id %></h2>
+<h2>Submission <%=h @submission.id %> <%= @submission.active? ? "(active)" : "" %></h2>
 <p>
   <b>Ruote ID:</b>
   <%=h @submission.fei_wfid %>
@@ -7,8 +7,8 @@
 <p><b>Created at:</b> <%=h @submission.created_at.localtime.to_s(:db) %></p>
 
 <p>
-  <b>Current Errors:</b>
-  <PRE><%=h @error %></PRE>
+  <b>Last Error:</b>
+  <PRE><%=h @submission.last_error %></PRE>
 </p>
 
 <p>
@@ -37,6 +37,10 @@
 	<p>
 	  <pre><%=h t.executable %> <%=h t.args %></pre>
 	</p>
+	<p>
+	  Auxiliary Files: <%=h t.aux_files ? t.aux_files.inspect : "" %>
+	</p>
+	
 	<% unless t.params_url.blank? %>
 	<p><b>Params File:</b><BR><BR>
 		<%= t.params_url %><BR><BR>

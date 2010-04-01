@@ -7,16 +7,23 @@
   <p>
     <%= f.label :description %>: <BR><%= f.text_area :description %>
   </p>
+
+	<p>
+	    <%= f.label :default_aux_files %> (S3 Bucket URL) -   <%= link_to_function "more" do |page|
+			     page.insert_html :bottom,  "default_aux_files", :partial => 'default_aux_files'
+
+			   end %> -
+
+	    <div id="default_aux_files">
+		  <%= render :partial => 'default_aux_files', :collection => @protocol.default_aux_files %>
+		</div>
+
+	</p>
+
+
+
   <p>
     <%= f.check_box :run_concurrent %> Run Concurrently for each input file 
-  </p>
-
-  <p>
-    <%= f.label :input_file_types %> (separated by space):    <%= f.text_field :input_file_types %>
-  </p>
-
-  <p>
-    <%= f.label :output_file_types %> (separated by space):    <%= f.text_field :output_file_types %>
   </p>
 
   <p>

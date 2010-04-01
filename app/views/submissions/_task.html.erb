@@ -16,7 +16,7 @@
 		   end %> -
 		
     <div id="aux_files_<%= task.protocol.id -%>">
-	  <%= render :partial => 'aux_files' %>
+	  <%= render :partial => 'aux_files', :collection => task.protocol.default_aux_files %>
 	</div>
 
 </p>
