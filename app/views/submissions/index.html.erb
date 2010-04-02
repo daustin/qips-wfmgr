@@ -9,7 +9,7 @@
   </tr>
 
 <% @submissions.each do |submission| %>
-  <tr>
+  <tr <%= submission.last_error.blank? ? '' : "id='flash_error'" %> >
     <td><%=h submission.owner %></td>
 	<td><%=h submission.output_folder %></td>
 	<td>|<% submission.tasks.each do |t| %>
