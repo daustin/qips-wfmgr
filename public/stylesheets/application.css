@@ -85,3 +85,14 @@ a {
   font-size: 12px;
  
 }
+
+li .handle {
+  font-size: 12px;
+  cursor:  move;
+  color: #777;
+}
+
+ul .moveable{
+  list-style: none;
+}
+

@@ -5,11 +5,14 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :protocols
 
+  map.resources :parameters, :collection => { :sort => :post }
+
   map.resources :tasks
 
   map.resources :submissions
 
   map.new_workflow_submission 'submission/new/:id', :controller => 'submissions', :action => 'new'
+
 
   # The priority is based upon order of creation: first created -> highest priority.
 

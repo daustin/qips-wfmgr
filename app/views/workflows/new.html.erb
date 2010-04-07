@@ -18,37 +18,27 @@
 	  </p>
 	  <p>
 	    <%= f.label :description %><br />
-	    <%= f.text_area :description %>
+	    <%= f.text_area :description, :size => "30x3"%>
 	  </p>	
-	
-	
-	
-</td>
-<td valign='top'>
-   <br>
+
    <p>
-   Add Protocols to workflow:
+   Protocols in workflow - 	   <%= link_to_function "Add" do |page|
+	     page.insert_html :bottom,  :stages, :partial => 'stage', :object => Stage.new(:position => 0)
+	   end -%> -
    </p>
    <!-- <%= select_tag "protocol_list", options_for_select(Protocol.all.collect {|pt| ["#{pt.name}", pt.id]}), :multiple => true, :id => 'protocol_list'%> -->
-   <br><br>
-   <%= link_to_function "Add" do |page|
-     page.insert_html :bottom,  :stages, :partial => 'stage', :object => Stage.new(:position => 0)
-     # page << "test = $('protocol_list').value"
-     # page[:stages].replace_html "test"
-
-   end %>   
-   <br><br>
    <div id="stages">
+	
 		<%= render :partial => 'stage', :collection => @workflow.stages %>
     
    </div>
-	
 	
 </td>	
 	
 </tr>
 <tr>
 	<td>
+		<BR>
 		<p>
 			
 			<%= hidden_field_tag "submit_flag", "0" %>

@@ -1,22 +1,93 @@
+<h1>Review Protocol</h1>
+
 <p>
   <b>Name:</b>
   <%=h @protocol.name %>
 </p>
 
 <p>
-  <b>Params template:</b>
-  <%=h @protocol.params_template %>
+  <b>Description:</b>
+  <%=h @protocol.description %>
 </p>
 
 <p>
-  <b>Params filename:</b>
-  <%=h @protocol.params_filename %>
+  <b>Executable</b><% if @protocol.run_concurrent == true %> (concurrent)<% end -%>:
+  <PRE><%= @protocol.executable %> <%= @protocol.default_args %> <%= @protocol.pass_filenames == true ? '--input=file1,file2' : ''%></PRE>
+</p>
+<p>
+  <b>Process Timeout:</b> <%= @protocol.process_timeout.blank? ? '' : "#{@protocol.process_timeout} mins"%>
 </p>
 
 <p>
-  <b>Run concurrent:</b>
-  <%=h @protocol.run_concurrent %>
+  <b>Default Auxiliary Files:</b> <BR><% unless @protocol.default_aux_files.blank? %><PRE><%= @protocol.default_aux_files.join("\n")%></PRE><% end -%>
+	
 </p>
+
+
+<p>
+  <b>Params Template:</b> <%=h @protocol.params_filename %><BR><BR>
+  <%= text_area_tag 'template', @protocol.params_template, :size => "50x15" %>
+	
+</p>
+
+<h2>Parameters Preview</h2>
+<p>This is how the parameters will look to users when they submit a workflow. Drag and drop each form element to change the ordering of parameters. Changes will be saved instantly. </p>
+
+<BR>
+
+<% if @protocol.parameters.empty? %>
+
+	<PRE>No Parameters found.</PRE>
+
+<% else -%>
+
+
+	<ul id="parameters" style="list-style: none;">
+		<% @protocol.parameters.each do |parameter| %>
+			<% content_tag_for :li, parameter  do -%>
+		
+				<p>	
+				<span class="handle">[move]</span>
+				<% case parameter.field_type  when 'text' %>
+
+				<%= parameter.pretty_name %>: <%= text_field_tag parameter.var_name, :value => parameter.initial_value %> 
+
+				<% when 'check_box' %>
+
+				<%= parameter.pretty_name %>: <%= check_box_tag "#{parameter.var_name}", parameter.initial_value %>
+
+				<% when 'radio_box' 
+				# enumerate through choices
+				%>
+				<%= parameter.pretty_name %>: <BR>
+				<% parameter.value_options.split(',').each do |v| 
+	
+					checked = v.strip.eql?(parameter.initial_value.strip)
+	
+					-%>
+				<%= radio_button_tag "#{parameter.var_name}", v.strip, checked %> <%= v.strip %>
+				<% end -%>
+				<% when 'select' %>
+				<%= parameter.pretty_name %>: <%= select_tag "#{parameter.var_name}", options_for_select(parameter.value_options.split(','), parameter.initial_value) %>
+				<% else %>
+	
+				<% end%>
+				
+				
+				</p>
+			<% end %>
+		<% end %>
+	</ul>
+
+	<%= sortable_element("parameters", :url => sort_parameters_path, :handle => "handle" ) %>
+
+
+		
+<% end %>
+
+
+<BR><BR>
+
 
 
 <%= link_to 'Edit', edit_protocol_path(@protocol) %> |

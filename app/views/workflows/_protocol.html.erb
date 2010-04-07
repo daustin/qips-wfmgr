@@ -1,0 +1,9 @@
+
+
+	
+<b><%= protocol.name%></b> <% if protocol.run_concurrent %>(concurrent)<% end -%><br><BR>
+<blockquote>
+	<%= protocol.executable%> <%=h protocol.default_args%> <%= protocol.pass_filenames == true ? '--input_files=file1,file2' : '' %><BR><BR>
+	Params File: <%= protocol.params_filename %>  <% unless protocol.parameters.empty? %><em> with <%= protocol.parameters.size %> parameters </em><% end -%><BR><BR>
+	Auxiliary Files: <BR><%= protocol.default_aux_files ? protocol.default_aux_files.join('<BR>') : '' %>	<BR><BR>
+</blockquote>

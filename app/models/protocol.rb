@@ -1,6 +1,6 @@
 class Protocol < ActiveRecord::Base
   has_many :workflows, :through => :stages
-  has_many :parameters
+  has_many :parameters, :order => 'position'
   has_many :tasks
   
   serialize :default_aux_files

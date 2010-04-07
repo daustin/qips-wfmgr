@@ -9,8 +9,8 @@
 </p>
 
 <p>
-  <b>Protocols:</b><BR><BR>
-  <%= render :partial => 'protocols' %>
+  <b>Protocols </b>(and their defaults): <BR><BR>
+  <%= render :partial => 'protocol', :collection => @workflow.protocols %>
 </p>
 
 
