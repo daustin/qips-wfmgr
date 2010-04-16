@@ -21,17 +21,20 @@
 	    <%= f.text_area :description, :size => "30x3"%>
 	  </p>	
 
-   <p>
-   Protocols in workflow - 	   <%= link_to_function "Add" do |page|
-	     page.insert_html :bottom,  :stages, :partial => 'stage', :object => Stage.new(:position => 0)
-	   end -%> -
-   </p>
-   <!-- <%= select_tag "protocol_list", options_for_select(Protocol.all.collect {|pt| ["#{pt.name}", pt.id]}), :multiple => true, :id => 'protocol_list'%> -->
-   <div id="stages">
-	
-		<%= render :partial => 'stage', :collection => @workflow.stages %>
-    
-   </div>
+
+	- Protocols in workflow - 
+
+	<% f.fields_for :stages do |builder| %>
+		<%= render :partial => 'stage_fields', :locals => { :f => builder }%>
+
+	<% end %>
+
+	<div>
+	<BR>
+
+	<%= link_to_add_fields "Add", f, :stages %>
+	</div>
+
 	
 </td>	
 	

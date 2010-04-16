@@ -9,15 +9,17 @@
   </p>
 
 <p>
-    <%= f.label :input_files %> (S3 Bucket URL) -   <%= link_to_function "more" do |page|
-		     page.insert_html :bottom,  "input_files", :partial => 'input_files'
+	<% f.fields_for "input_files" do |b| %>
+	    <%= f.label :input_files %> (S3 Bucket URL) -   <%= link_to_function "more" do |page|
+			     page.insert_html :bottom,  "input_files", :partial => 'input_files', :locals => { :f => b }
 
-		   end %> - 
+			   end %> - 
 		
-    <div id="input_files">
-	  <%= render :partial => 'input_files' %>
-	</div>
+	    <div id="input_files">
+		  <%= render :partial => 'input_files', :locals => { :f => b } %>
+		</div>
 
+	<% end %>
 </p>
 
   
@@ -30,7 +32,12 @@
 
   <div id="tasks">
 	<table cellspacing=0 cellpadding=5 border=1>
-  <%= render :partial => 'task', :collection => @submission.tasks %>
+		
+		<% f.fields_for :tasks do |b| %>
+  			<%= render :partial => 'task', :object => b.object, :locals => { :t => b } %>
+		
+		<% end %>
+
      </table>
   </div>
   <p>

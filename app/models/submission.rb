@@ -4,13 +4,7 @@ class Submission < ActiveRecord::Base
   serialize :input_files
   serialize :process_definition
 
-  def task_attributes=(task_attributes)
-    puts task_attributes.inspect
-    
-    task_attributes.each do |attributes|
-      tasks.build(attributes)
-    end
-  end
+  accepts_nested_attributes_for :tasks
   
   ###############################################
   #

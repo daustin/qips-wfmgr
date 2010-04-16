@@ -1,0 +1,21 @@
+<div class="fields">
+<table>
+<tr>
+  <th><%= f.label :pretty_name %></th><th><%= f.label :var_name %></th>
+  <th><%= f.label :description %></th><th><%= f.label :field_type %></th><th><%= f.label :initial_value %></th>
+  <th><%= f.label :value_options %> (csv)</th><th><%= f.label :remote_value_options %></th>
+  <th>Del</th>
+</tr>
+
+<tr>
+  <td><%= f.text_field :pretty_name, :size => 12 %></td><td><%= f.text_field :var_name, :size => 12 %></td>
+  <td><%= f.text_field :description %></td><td><%= f.select :field_type, ['text','check_box', 'radio_box', 'select']  %></td><td><%= f.text_field :initial_value, :size => 10 %></td>
+  <td><%= f.text_field :value_options %></td><td><%= f.text_field :remote_value_options %><%= f.hidden_field :_destroy %></td>
+
+<td>
+<%= link_to_remove_fields "X", f %>
+</td>
+</tr>
+</table>
+
+</div>

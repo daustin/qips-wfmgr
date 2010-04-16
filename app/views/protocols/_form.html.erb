@@ -8,18 +8,20 @@
     <%= f.label :description %>: <BR><%= f.text_area :description %>
   </p>
 
+
 	<p>
-	    <%= f.label :default_aux_files %> (S3 Bucket URL) -   <%= link_to_function "more" do |page|
-			     page.insert_html :bottom,  "default_aux_files", :partial => 'default_aux_files'
+		<% f.fields_for "default_aux_files" do |b| %>
+		    <%= f.label :default_aux_files %> (S3 Bucket URL) -   <%= link_to_function "more" do |page|
+				     page.insert_html :bottom,  "default_aux_files", :partial => 'default_aux_files', :locals => { :f => b }
 
-			   end %> -
+				   end %> - 
+		
+		    <div id="default_aux_files">
+			  <%= render :partial => 'default_aux_files', :collection => @protocol.default_aux_files, :locals => { :f => b } %>
+			</div>
 
-	    <div id="default_aux_files">
-		  <%= render :partial => 'default_aux_files', :collection => @protocol.default_aux_files %>
-		</div>
-
+		<% end %>
 	</p>
-
 
 
   <p>
@@ -47,7 +49,7 @@
   </p>
 
   <p>
-    <%= f.label :params_template %><br />
+    <%= f.label :params_template %> - pass values into params file using erb tags (var_name indicated below):<PRE> &lt;%= values[:var_name] %&gt;</PRE><br />
     <%= f.text_area :params_template %>
   </p>
 
@@ -56,16 +58,19 @@
     <TR>
       <td>
        <h2>Protocol Parameters</h2>
-       <p>These Parameters will be presented to the user so they can specify the settings for the job.  The parameter values will get saved into a file as the params filename, which is passed along to the working directory.  The format of the params file is generated from the params template above(erb). The position field tells which order the parameter fields are presented to the user. 
+       <p>These Parameters will be presented to the user so they can specify the settings for the job.  The parameter values will get saved into a file as the params filename, which is passed along to the working directory.  The format of the params file is generated from the params template above(erb). Use erb tags to insert values into the params file (see above).
 
-     <div id="params">
-     <%= render :partial => 'parameter', :collection => @protocol.parameters %>
-     </div>
+		<% f.fields_for :parameters do |b| %>
 
-     <%= link_to_function "Add Another Parameter" do |page|
-       page.insert_html :bottom,  :params, :partial => 'parameter', :object => Parameter.new()
-     end %>
-       
+        	<%= render :partial => 'parameter_fields', :locals => { :f => b } %>
+	
+		<% end %>
+		
+		<div>
+			<%= link_to_add_fields "Add", f, :parameters %>
+		</div>
+		
+
       </td>
 
     </TR>

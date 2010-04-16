@@ -1,21 +1,9 @@
 class Workflow < ActiveRecord::Base
-  has_many :stages, :order => :position
+  has_many :stages, :order => :position, :dependent => :destroy
   has_many :protocols, :through => :stages
   
+  accepts_nested_attributes_for :stages, :reject_if => lambda { |a| a[:protocol_id].blank? } , :allow_destroy => true
   
-  def stage_attributes=(stage_attributes)
-    #before we build these, lets destroy the existing ones
-    Stage.delete(self.stages.collect {|s| s.id})
-    position = 1
-    stage_attributes.each do |attributes|
-      attributes[:position] = position
-      stages.build(attributes)
-      position += 1
-    end
-  end
-  
-  
-  
-  
+
     
 end

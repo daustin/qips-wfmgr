@@ -10,12 +10,6 @@ class Task < ActiveRecord::Base
 
   before_save :generate_vars #do erb translation, generate params_url from timestamp
 
-
-  def param_values_attributes=(param_values_attributes)
-    
-    self.param_values = param_values_attributes
-        
-  end
   
   def generate_vars
     #first lets generate the params url

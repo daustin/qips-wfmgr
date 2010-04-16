@@ -1,6 +1,3 @@
-<% fields_for "submission[task_attributes][][param_values_attributes]", parameter do |p|
-	
-%>	
 <p>	
 <% case parameter.field_type  when 'text' %>
 
@@ -8,7 +5,7 @@
 
 <% when 'check_box' %>
 
-<%= parameter.pretty_name %>: <%= check_box_tag "submission[task_attributes][][param_values_attributes][#{parameter.var_name}]", parameter.initial_value %>
+<%= parameter.pretty_name %>: <%= p.check_box parameter.var_name %>
 
 <% when 'radio_box' 
 # enumerate through choices
@@ -19,14 +16,13 @@
 	checked = v.strip.eql?(parameter.initial_value.strip)
 	
 	-%>
-<%= radio_button_tag "submission[task_attributes][][param_values_attributes][#{parameter.var_name}]", v.strip, checked %> <%= v.strip %>
+<%= p.radio_button parameter.var_name, v, :checked => checked %> <%= v.strip %>
 <% end -%>
 <% when 'select' %>
-<%= parameter.pretty_name %>: <%= select_tag "submission[task_attributes][][param_values_attributes][#{parameter.var_name}]", options_for_select(parameter.value_options.split(','), parameter.initial_value) %>
+<%= parameter.pretty_name %>: <%= select_tag parameter.var_name, options_for_select(parameter.value_options.split(','), parameter.initial_value) %>
 <% else %>
+
 	
 <% end%>
 </p>	
-
-<% end %>
  

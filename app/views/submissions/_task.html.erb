@@ -1,8 +1,5 @@
 <tr><td>
 <div class="task">
-<% fields_for "submission[task_attributes][]", task do |t| 
-
-%>
 <p> <b><%= task.protocol.name %></b></p>
 <%= t.hidden_field :protocol_id, :value => task.protocol.id %>
 <%= t.hidden_field :rank, :value => task.rank %>
@@ -10,15 +7,20 @@
 <%= t.hidden_field :name, :value => task.protocol.name %>
 
 <p>
+	 <% t.fields_for "aux_files" do |b|%>
+	
     <%= t.label :aux_files %> (S3 Bucket URL) -   <%= link_to_function "more" do |page|
-		     page.insert_html :bottom,  "aux_files_#{task.protocol.id}", :partial => 'aux_files'
+		     page.insert_html :bottom,  "aux_files_#{task.protocol.id}", :partial => 'aux_files', :locals => {:b => b}
 
 		   end %> -
 		
     <div id="aux_files_<%= task.protocol.id -%>">
-	  <%= render :partial => 'aux_files', :collection => task.protocol.default_aux_files %>
+	 
+	  <%= render :partial => 'aux_files', :collection => task.protocol.default_aux_files, :locals => {:b => b} %>
+	
+	  
 	</div>
-
+<% end %>
 </p>
 
 
@@ -29,11 +31,9 @@
 	<% end -%>
 </p>
 
-	 <%= render :partial => 'parameter', :collection => task.protocol.parameters %>
-
-
-<% end %>
-
+	<% t.fields_for "param_values" do |b| %>
+	 <%= render :partial => 'parameter', :collection => task.protocol.parameters, :locals => { :p => b } %>
+	<% end %>
 
 </div>
 </td></tr>
