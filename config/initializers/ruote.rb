@@ -185,9 +185,16 @@ module Ruote
       
       unless out =~ /201 Created/
         #throw error!
-        raise 'poop'
-        #workitem.fields['success'] = 'false'
-        #workitem.fields['error'] = 'Could not start nodes!'
+        
+        unless workitem.fields['params'].nil? || workitem.fields['params']['task_id'].nil?
+          s = Task.find(workitem.fields['params']['task_id'].to_i).submission
+          s.last_error = "Could not request #{num_nodes} nodes from RMGR. Contact system administrator."
+          s.save
+           
+         end
+         
+         raise 'Could not request nodes via RMGR!!'
+        
                 
       end
       

@@ -48,6 +48,8 @@ class Submission < ActiveRecord::Base
     pdef = generate_process_definition
     self.process_definition = pdef
     
+    save
+    
     # RuoteAMQP::WorkitemListener.new(RuoteKit.engine)
     wfid = RuoteKit.engine.launch(self.process_definition)
     # Ruote.engine.wait_for(wfid)
@@ -89,7 +91,7 @@ class Submission < ActiveRecord::Base
                             
               wait_for :time => PROCESS_WAIT_TIME unless count == 0
             
-              request_nodes :num_nodes => "${f:previous_output_files_size}"
+              request_nodes :num_nodes => "${f:previous_output_files_size}", :task_id => "#{t.id}"
             
               concurrent_iterator :merge_type => 'isolate', :on_val => "${f:previous_output_files_joined}", :to_var => 'v' do
 
@@ -113,7 +115,7 @@ class Submission < ActiveRecord::Base
             :aux_files => "#{t.aux_files.join(',') unless t.aux_files.nil?}", :args => "#{t.args}", :queue => "#{t.protocol.queue}", :output_folder => "#{out_folder}"
             
 
-            rename_outputs :task_id => "#{t.id}"
+            rename_outputs :task_id => "#{t.id}", :task_id => "#{t.id}"
             
           end
           

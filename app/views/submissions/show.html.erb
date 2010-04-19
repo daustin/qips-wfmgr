@@ -1,4 +1,4 @@
-<h2>Submission <%=h @submission.id %> <%= @submission.active? ? "(active)" : "" %></h2>
+<h2>Submission <%=h @submission.id %> (<%= @submission.active? ? "active" : "" %><%= @submission.last_error.blank? ? "" : " with errors" %>)</h2>
 <p>
   <b>Ruote ID:</b>
   <%=h @submission.fei_wfid %>
@@ -8,7 +8,9 @@
 
 <p>
   <b>Last Error:</b>
-  <PRE><%=h @submission.last_error %></PRE>
+  <% unless @submission.last_error.blank? %>
+  <PRE id="flash_error"><%=h @submission.last_error %></PRE>
+	<% end -%>
 </p>
 
 <p>
