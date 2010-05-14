@@ -43,3 +43,8 @@ RMGR_CMD = 'curl --basic -u "admin:admin" http://localhost:3000/'
 
 #scratch space for s3
 S3_SCRATCH_SPACE = "daustin-test:qips_scratch/"
+
+#active resource site
+RMGR_SITE = 'http://localhost:3001'
+
+

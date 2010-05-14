@@ -7,5 +7,11 @@ class Protocol < ActiveRecord::Base
   
   accepts_nested_attributes_for :parameters, :reject_if => lambda { |a| a[:var_name].blank? } , :allow_destroy => true
     
+  def role
+    
+    @role ||= Role.find(role_id) unless role_id.blank?
+    
+  end
+  
   
 end

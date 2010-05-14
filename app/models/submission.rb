@@ -91,7 +91,7 @@ class Submission < ActiveRecord::Base
                             
               wait_for :time => PROCESS_WAIT_TIME unless count == 0
             
-              request_nodes :num_nodes => "${f:previous_output_files_size}", :task_id => "#{t.id}"
+              request_nodes :num_nodes => "${f:previous_output_files_size}", :task_id => "#{t.id}", :role_id => "#{t.role_id}"
             
               concurrent_iterator :merge_type => 'isolate', :on_val => "${f:previous_output_files_joined}", :to_var => 'v' do
 
@@ -108,7 +108,7 @@ class Submission < ActiveRecord::Base
             
             wait_for :time => PROCESS_WAIT_TIME unless count == 0
 
-            request_nodes :num_nodes => "1"
+            request_nodes :num_nodes => "1", :role_id => "#{t.role_id}"
 
             qips_node :command => '/worker/start_work', :input_files => "${f:previous_output_files_joined}", :params_file => "#{t.params_url}",
             :executable => "#{t.executable}", :exec_timeout => "#{t.protocol.process_timeout}", :pass_filenames => "#{t.protocol.pass_filenames}", 
