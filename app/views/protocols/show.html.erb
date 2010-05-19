@@ -11,6 +11,11 @@
 </p>
 
 <p>
+  <b>Role:</b>
+  <%=h @protocol.role.name %>
+</p>
+
+<p>
   <b>Executable</b><% if @protocol.run_concurrent == true %> (concurrent)<% end -%>:
   <PRE><%= @protocol.executable %> <%= @protocol.default_args %> <%= @protocol.pass_filenames == true ? '--input=file1,file2' : ''%></PRE>
 </p>

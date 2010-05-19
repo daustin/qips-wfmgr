@@ -29,6 +29,10 @@
   </p>
 
   <p>
+    <%= f.collection_select :role_id, Role.find(:all), :id, :name %> Role to pass to Resource Manager when requesting nodes. 
+  </p>
+
+  <p>
     <%= f.label :executable %> (full path):    <%= f.text_field :executable %>
   </p>
 

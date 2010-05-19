@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{qips-wfmgr}
-  s.version = "0.2.3"
+  s.version = "0.4.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Dave Austin", "Andrew Brader"]
-  s.date = %q{2010-03-10}
+  s.date = %q{2010-04-19}
   s.default_executable = %q{static_workflow_test.rb}
   s.description = %q{Workflow Manager is in charge of creating, submitting, and tracking custom workflows.}
   s.email = %q{daustin@mail.med.upenn.edu}
@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
      "Rakefile",
      "VERSION",
      "app/controllers/application_controller.rb",
+     "app/controllers/parameters_controller.rb",
      "app/controllers/protocols_controller.rb",
      "app/controllers/stages_controller.rb",
      "app/controllers/submissions_controller.rb",
@@ -41,8 +42,9 @@ Gem::Specification.new do |s|
      "app/models/task.rb",
      "app/models/workflow.rb",
      "app/views/layouts/application.html.erb",
+     "app/views/protocols/_default_aux_files.html.erb",
      "app/views/protocols/_form.html.erb",
-     "app/views/protocols/_parameter.html.erb",
+     "app/views/protocols/_parameter_fields.html.erb",
      "app/views/protocols/edit.html.erb",
      "app/views/protocols/index.html.erb",
      "app/views/protocols/new.html.erb",
@@ -52,6 +54,7 @@ Gem::Specification.new do |s|
      "app/views/stages/index.html.erb",
      "app/views/stages/new.html.erb",
      "app/views/stages/show.html.erb",
+     "app/views/submissions/_aux_files.html.erb",
      "app/views/submissions/_input_files.html.erb",
      "app/views/submissions/_parameter.html.erb",
      "app/views/submissions/_task.html.erb",
@@ -62,8 +65,8 @@ Gem::Specification.new do |s|
      "app/views/tasks/index.html.erb",
      "app/views/tasks/new.html.erb",
      "app/views/tasks/show.html.erb",
-     "app/views/workflows/_protocols.html.erb",
-     "app/views/workflows/_stage.html.erb",
+     "app/views/workflows/_protocol.html.erb",
+     "app/views/workflows/_stage_fields.html.erb",
      "app/views/workflows/edit.html.erb",
      "app/views/workflows/index.html.erb",
      "app/views/workflows/new.html.erb",
@@ -105,6 +108,14 @@ Gem::Specification.new do |s|
      "db/migrate/20100301204717_add_process_defintion_to_submission.rb",
      "db/migrate/20100305201358_rename_value_hash_remote_value_in_parameter.rb",
      "db/migrate/20100305201821_add_param_values_params_url_params_contents_to_task.rb",
+     "db/migrate/20100311204758_add_name_to_task.rb",
+     "db/migrate/20100311214508_add_aux_files_to_task.rb",
+     "db/migrate/20100331200618_add_exec_output_exec_error_to_task.rb",
+     "db/migrate/20100331202235_add_fei_wfid_to_submission.rb",
+     "db/migrate/20100401175804_add_default_aux_files_to_protocol.rb",
+     "db/migrate/20100401183137_remove_exec_error_from_task.rb",
+     "db/migrate/20100401194124_add_last_error_to_submission.rb",
+     "db/migrate/20100407195356_add_position_to_parameter.rb",
      "db/seeds.rb",
      "doc/README_FOR_APP",
      "lib/s3_helper.rb",
@@ -116,6 +127,7 @@ Gem::Specification.new do |s|
      "pkg/qips-wfmgr-0.2.0.gem",
      "pkg/qips-wfmgr-0.2.1.gem",
      "pkg/qips-wfmgr-0.2.2.gem",
+     "pkg/qips-wfmgr-0.2.3.gem",
      "public/404.html",
      "public/422.html",
      "public/500.html",
