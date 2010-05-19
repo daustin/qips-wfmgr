@@ -26,3 +26,6 @@ PROCESS_WAIT_TIME = 5
 
 #active resource site
 RMGR_SITE = 'http://admin:admin@localhost:3001'
+
+#active resource lims site
+ILIMS_SITE = 'http://admin:admin@localhost:3002'

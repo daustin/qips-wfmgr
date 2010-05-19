@@ -10,9 +10,13 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :tasks
 
   map.resources :submissions
+  
+  map.resources :sessions
 
   map.new_workflow_submission 'submission/new/:id', :controller => 'submissions', :action => 'new'
 
+  map.logout 'logout', :controller => 'sessions', :action => 'destroy'
+  map.login 'login', :controller => 'sessions', :action => 'new'
 
   # The priority is based upon order of creation: first created -> highest priority.
 
