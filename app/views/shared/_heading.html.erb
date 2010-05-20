@@ -3,14 +3,15 @@
   <tr class="data_row"> 
     <td align="left"><%= image_tag("qips.png", :size => "125x65") %></td>
     <td align="left"><%= image_tag("handoff.jpg", :size => "153x65") %></td>
-    <td align="center"><big><strong> [ Workflow Manager ]</strong></big><BR>Welcome, <%= session[:user_id].nil? ? '' : User.find(session[:user_id]).username -%>!</td>
+    <td align="center"><big><strong> [ Workflow Manager ]</strong></big><BR>Welcome<%= session[:user_id].nil? ? '' : ", #{User.find(session[:user_id]).username}" -%>!</td>
 
 
    <td align="right"><strong>
  <%= link_to "Workflows", workflows_path %> | 
 <%= link_to "Protocols", protocols_path %> | 
 <%= link_to "Submissions", submissions_path %> |
- <%= link_to "RuoteKit", "/_ruote/processes", :popup => true %> |
+ <%= link_to "RuoteKit", "/_ruote/processes", :popup => true %> | 
+<%= link_to "Logout", logout_path %>
         </strong></td>
   </tr>
 </table>

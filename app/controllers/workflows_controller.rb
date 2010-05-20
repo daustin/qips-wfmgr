@@ -2,7 +2,10 @@ class WorkflowsController < ApplicationController
   # GET /workflows
   # GET /workflows.xml
   def index
-    @workflows = Workflow.all
+    
+    
+    @workflows = Workflow.find(:all, :conditions => "user_id IS NULL OR user_id = '#{session[:user_id]}'")
+    @my_workflows = current_user.workflows
 
     respond_to do |format|
       format.html # index.html.erb

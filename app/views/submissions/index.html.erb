@@ -2,16 +2,14 @@
 
 <table cellpadding="4" cellspacing="5">
   <tr>
-    <th>Owner</th>
-	<th>Output Folder</th>
+	<th>Project</th>
 	<th>Tasks</th>
 	<th>Submitted At</th>
   </tr>
 
 <% @submissions.each do |submission| %>
   <tr <%= submission.last_error.blank? ? '' : "id='flash_error'" %> >
-    <td><%=h submission.owner %></td>
-	<td><%=h submission.output_folder %></td>
+	<td>Project placeholder</td>
 	<td>|<% submission.tasks.each do |t| %>
 		<%= t.protocol.name %> | 
 		<% end %>

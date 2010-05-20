@@ -1,4 +1,4 @@
-<h1>Listing workflows</h1>
+<h1>My Workflows</h1>
 
 <table cellpadding="4" cellspacing="5">
   <tr>
@@ -7,7 +7,7 @@
 	<th>Protocols</th>
   </tr>
 
-<% @workflows.each do |workflow| %>
+<% @my_workflows.each do |workflow| %>
   <tr>
     <td><%=h workflow.name %></td>
     <td><%=h workflow.description %></td>
@@ -27,3 +27,26 @@
 
 <%= link_to 'New workflow', new_workflow_path %>
 
+<br />
+
+<h1>Other Workflows</h1>
+
+<table cellpadding="4" cellspacing="5">
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+	<th>Protocols</th>
+  </tr>
+
+<% @workflows.each do |workflow| %>
+  <tr>
+    <td><%=h workflow.name %></td>
+    <td><%=h workflow.description %></td>
+	<td>|<% workflow.protocols.each do |p| %>
+		<%= p.name %> | 
+		<% end %>
+		</td>
+	<td><%= link_to 'Submit', new_workflow_submission_url(:id => workflow.id) %></td>
+  </tr>
+<% end %>
+</table>

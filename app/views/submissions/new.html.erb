@@ -4,8 +4,8 @@
   <%= f.error_messages %>
 
   <p>
-    <%= f.label :owner %><br />
-    <%= f.text_field :owner %>
+    <strong>Owner: <%= current_user.username %></strong><br />
+    <%= f.hidden_field :user_id, :value => session[:user_id] %>
   </p>
 
 <p>
