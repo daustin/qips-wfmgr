@@ -24,8 +24,8 @@
 
   
   <p>
-    <%= f.label :output_folder %> (S3 Bucket URL) <br />
-    <%= f.text_field :output_folder %>
+    <%= f.label :project_id, 'Output Project:' %><br />
+    <%= f.select :project_id, Project.get(:index_by_id, :user_id => session[:user_id]).collect{|p| [p['name'], p['id']]} %>
   </p>
   
    <h3>Fill in Protocols Below:</h3>

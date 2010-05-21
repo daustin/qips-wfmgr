@@ -94,6 +94,13 @@ class SubmissionsController < ApplicationController
     end
   end
 
+  def update_options
+    
+    @options = Item.get(:index_all, :project_id => params[:project_id])
+    
+    
+  end
+
   # DELETE /submissions/1
   # DELETE /submissions/1.xml
   def destroy
