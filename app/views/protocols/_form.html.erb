@@ -1,3 +1,19 @@
+<%= stylesheet_link_tag "common.css" %>
+<%= stylesheet_link_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/ui.all.css" %>
+<%= stylesheet_link_tag "ui.multiselect.css" %>
+<%= javascript_include_tag "jquery-1.4.2.min.js" %>
+<%= javascript_include_tag "jquery-ui-1.8.1.custom.min.js" %>
+<%= javascript_include_tag "ui.multiselect.js" %>
+
+<script type="text/javascript">
+$(function(){
+  // choose either the full version
+  $(".multiselect").multiselect();
+  // or disable some features
+  //$(".multiselect").multiselect({sortable: false, searchable: false});
+});
+</script>
+
 <% form_for(@protocol) do |f| %>
   <%= f.error_messages %>
 
@@ -7,23 +23,18 @@
   <p>
     <%= f.label :description %>: <BR><%= f.text_area :description %>
   </p>
+ 
 
-
-	<p>
-		<% f.fields_for "default_aux_files" do |b| %>
-		    <%= f.label :default_aux_files %> (S3 Bucket URL) -   <%= link_to_function "more" do |page|
-				     page.insert_html :bottom,  "default_aux_files", :partial => 'default_aux_files', :locals => { :f => b }
-
-				   end %> - 
-		
-		    <div id="default_aux_files">
-			  <%= render :partial => 'default_aux_files', :collection => @protocol.default_aux_files, :locals => { :f => b } %>
-			</div>
-
-		<% end %>
+   <p>
+	<table>
+		<tr><td>
+    <%= f.label :default_aux_files %>: 
+		</td>
+		<tr><td>
+    <%= f.select :default_aux_files, options_for_select(@items_list),{}, {:multiple => true, :class => "multiselect"} %>
+		</td></tr>
+		</table>
 	</p>
-
-
   <p>
     <%= f.check_box :run_concurrent %> Run Concurrently for each input file 
   </p>

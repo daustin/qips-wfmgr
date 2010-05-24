@@ -1,3 +1,17 @@
 <div class="auxf">
-<%= f.text_field '', :value => "#{default_aux_files}", :size => 50  %> <%= link_to_function "less", "this.up('.auxf').remove()" %> <br>
+
+<%= select_tag 'project_select',  options_for_select([['-- Select Project --', '']] + Project.get(:index_by_id, :user_id => session[:user_id]).collect{ |p| [p['name'], p['id']]}), 
+									:onchange => remote_function(:update => 'protocol_default_aux_files_', 
+									:url => { :action => :update_options }, :with => "'project_id='+value") %>
+
+<% 
+
+item = Item.get(:index_all, :id => default_aux_files) if default_aux_files
+
+%>
+
+<%= f.select '', (default_aux_files.nil? ? ["-- Select Item --"] : { item['attachment_file_name'] => item['id']}) %>
+
+<%= link_to_function "less", "this.up('.auxf').remove()" %> <br>
+
 </div>

@@ -11,13 +11,13 @@
 	 <% t.fields_for "aux_files" do |b|%>
 	
     <%= t.label :aux_files %> (S3 Bucket URL) -   <%= link_to_function "more" do |page|
-		     page.insert_html :bottom,  "aux_files_#{task.protocol.id}", :partial => 'aux_files', :locals => {:b => b}
+		     page.insert_html :bottom,  "aux_files_#{task.protocol.id}", :partial => 'aux_files', :locals => {:f => b}
 
 		   end %> -
 		
     <div id="aux_files_<%= task.protocol.id -%>">
 	 
-	  <%= render :partial => 'aux_files', :collection => task.protocol.default_aux_files, :locals => {:b => b} %>
+	  <%= render :partial => 'aux_files', :collection => task.protocol.default_aux_files, :locals => {:f => b} %>
 	
 	  
 	</div>

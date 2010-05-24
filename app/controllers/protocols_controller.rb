@@ -25,6 +25,23 @@ class ProtocolsController < ApplicationController
   # GET /protocols/new.xml
   def new
     @protocol = Protocol.new
+    @items_list = Array.new
+
+    #lets build the options hash for items
+    projects = Project.get(:index_by_id, :user_id => session[:user_id])
+
+    projects.each do |p|
+      
+      items = Item.get(:index_all, :project_id => p['id'] )
+      
+      items.each do |i|
+        
+        @items_list << "#{p['name']} --> #{i['attachment_file_name']}"
+        
+      end
+      
+    end
+
 
     respond_to do |format|
       format.html # new.html.erb
@@ -81,6 +98,14 @@ class ProtocolsController < ApplicationController
       format.html { redirect_to(protocols_url) }
       format.xml  { head :ok }
     end
+  end
+  
+  
+  def update_options
+    
+    @options = Item.get(:index_all, :project_id => params[:project_id])
+    
+    
   end
   
     

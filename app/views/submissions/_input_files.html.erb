@@ -1,9 +1,9 @@
 <div class="inf">
 
-<%= select_tag 'test',  options_for_select(Project.get(:index_by_id, :user_id => session[:user_id]).collect{ |p| [p['name'], p['id']]}), 
+<%= select_tag 'project_select',  options_for_select(Project.get(:index_by_id, :user_id => session[:user_id]).collect{ |p| [p['name'], p['id']]}), 
 :onchange => remote_function(:update => 'submission_input_files_', :url => { :action => :update_options }, :with => "'project_id='+value") %>
 
-<%= f.select '', ['Select Here'] %>
+<%= f.select '', ['-- Select Item --'] %>
 
 <%= link_to_function "less", "this.up('.inf').remove()" %> <br>
 </div>
