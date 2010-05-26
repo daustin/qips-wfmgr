@@ -8,9 +8,9 @@
 <script type="text/javascript">
 $(function(){
   // choose either the full version
-  $(".multiselect").multiselect();
+  //$(".multiselect").multiselect();
   // or disable some features
-  //$(".multiselect").multiselect({sortable: false, searchable: false});
+  $(".multiselect").multiselect({sortable: false, searchable: true});
 });
 </script>
 
@@ -31,7 +31,7 @@ $(function(){
     <%= f.label :default_aux_files %>: 
 		</td>
 		<tr><td>
-    <%= f.select :default_aux_files, options_for_select(@items_list),{}, {:multiple => true, :class => "multiselect"} %>
+    <%= f.select :default_aux_files, options_for_select(@items_list, @selected_items_list),{}, {:multiple => true, :class => "multiselect"} %>
 		</td></tr>
 		</table>
 	</p>

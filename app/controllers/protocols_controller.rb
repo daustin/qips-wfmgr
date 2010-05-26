@@ -25,23 +25,7 @@ class ProtocolsController < ApplicationController
   # GET /protocols/new.xml
   def new
     @protocol = Protocol.new
-    @items_list = Array.new
-
-    #lets build the options hash for items
-    projects = Project.get(:index_by_id, :user_id => session[:user_id])
-
-    projects.each do |p|
-      
-      items = Item.get(:index_all, :project_id => p['id'] )
-      
-      items.each do |i|
-        
-        @items_list << "#{p['name']} --> #{i['attachment_file_name']}"
-        
-      end
-      
-    end
-
+    @items_list = current_user.build_items_list
 
     respond_to do |format|
       format.html # new.html.erb
@@ -52,6 +36,10 @@ class ProtocolsController < ApplicationController
   # GET /protocols/1/edit
   def edit
     @protocol = Protocol.find(params[:id])
+    @items_list = current_user.build_items_list
+    @selected_items_list = @protocol.build_selected_items_list
+    
+
   end
 
   # POST /protocols
