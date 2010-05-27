@@ -26,14 +26,10 @@ $(function(){
  
 
    <p>
-	<table>
-		<tr><td>
-    <%= f.label :default_aux_files %>: 
-		</td>
-		<tr><td>
-    <%= f.select :default_aux_files, options_for_select(@items_list, @selected_items_list),{}, {:multiple => true, :class => "multiselect"} %>
-		</td></tr>
-		</table>
+	
+    <%= f.label :default_aux_files %>:<br>
+	
+    <%= f.select :default_aux_files, options_for_select(@items_list, @protocol.default_aux_files),{}, {:multiple => true, :class => "multiselect"} %>
 	</p>
   <p>
     <%= f.check_box :run_concurrent %> Run Concurrently for each input file 

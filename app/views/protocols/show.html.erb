@@ -24,7 +24,7 @@
 </p>
 
 <p>
-  <b>Default Auxiliary Files:</b> <BR><% unless @protocol.default_aux_files.blank? %><PRE><%= @protocol.default_aux_files.join("\n")%></PRE><% end -%>
+  <b>Default Auxiliary Files:</b> <BR><% unless @protocol.default_aux_files.empty? %><PRE><%= @pretty_selected_items_list.join("\n")%></PRE><% end -%>
 	
 </p>
 

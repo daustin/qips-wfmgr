@@ -14,6 +14,7 @@ class ProtocolsController < ApplicationController
   # GET /protocols/1.xml
   def show
     @protocol = Protocol.find(params[:id])
+    @pretty_selected_items_list = @protocol.build_selected_items_list.collect{|li| li[0]}
 
     respond_to do |format|
       format.html # show.html.erb
@@ -37,8 +38,6 @@ class ProtocolsController < ApplicationController
   def edit
     @protocol = Protocol.find(params[:id])
     @items_list = current_user.build_items_list
-    @selected_items_list = @protocol.build_selected_items_list
-    
 
   end
 
@@ -63,6 +62,7 @@ class ProtocolsController < ApplicationController
   # PUT /protocols/1.xml
   def update
     @protocol = Protocol.find(params[:id])
+    @protocol.default_aux_files = [] if params[:default_aux_files].nil?
 
     respond_to do |format|
       if @protocol.update_attributes(params[:protocol])

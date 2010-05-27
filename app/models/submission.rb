@@ -73,7 +73,7 @@ class Submission < ActiveRecord::Base
     in_files = self.input_files
     
     task_array = self.tasks
-    out_folder = self.output_folder
+    out_project = self.project_id
     count = 0
 
     pdef = Ruote.process_definition do
@@ -97,7 +97,7 @@ class Submission < ActiveRecord::Base
 
                 qips_node :command => '/worker/start_work', :input_files => '${v:v}', :params_file => "#{t.params_url}",
                 :executable => "#{t.executable}", :exec_timeout => "#{t.protocol.process_timeout}", :pass_filenames => "#{t.protocol.pass_filenames}", 
-                :aux_files => "#{t.aux_files.join(',') unless t.aux_files.nil?}", :args => "#{t.args}", :queue => "#{t.protocol.queue}", :output_folder => "#{out_folder}"
+                :aux_files => "#{t.aux_files.join(',') unless t.aux_files.nil?}", :args => "#{t.args}", :queue => "#{t.protocol.queue}", :output_project => "#{out_project}"
 
               end
     
@@ -112,7 +112,7 @@ class Submission < ActiveRecord::Base
 
             qips_node :command => '/worker/start_work', :input_files => "${f:previous_output_files_joined}", :params_file => "#{t.params_url}",
             :executable => "#{t.executable}", :exec_timeout => "#{t.protocol.process_timeout}", :pass_filenames => "#{t.protocol.pass_filenames}", 
-            :aux_files => "#{t.aux_files.join(',') unless t.aux_files.nil?}", :args => "#{t.args}", :queue => "#{t.protocol.queue}", :output_folder => "#{out_folder}"
+            :aux_files => "#{t.aux_files.join(',') unless t.aux_files.nil?}", :args => "#{t.args}", :queue => "#{t.protocol.queue}", :output_project => "#{out_project}"
             
 
             rename_outputs :task_id => "#{t.id}", :task_id => "#{t.id}"

@@ -14,17 +14,17 @@
 </p>
 
 <p>
-  <b>Owner:</b>
-  <%=h @submission.owner %>
+  <strong>Owner: <%= current_user.username %></strong><br />
 </p>
 <p>
   <b>Input Files:</b>
-  <%=h @submission.input_files.inspect %>
+	<PRE><%= @pretty_input_files_list.join("\n") %></PRE>
+
 </p>
 <p>
 
-  <b>Output Folder:</b>
-  <%=h @submission.output_folder %>
+  <b>Output Project:</b>
+  <%=h Project.get(:login_bypass, :method => :find_project_by_id, :id => @submission.project_id)['name'] %>
 </p>
 <p>
 
@@ -40,7 +40,13 @@
 	  <pre><%=h t.executable %> <%=h t.args %></pre>
 	</p>
 	<p>
-	  Auxiliary Files: <%=h t.aux_files ? t.aux_files.inspect : "" %>
+		Auxiliary Files:
+	<PRE><% t.aux_files.each do |af|
+	   pa = Project.login_bypass(:find_project_attachment_by_id, :id => af)
+	-%>
+<%= "#{pa['project']['name']} --> #{pa['item']['attachment_file_name']}\n" %>
+<% end -%>
+		</PRE>
 	</p>
 	
 	<% unless t.params_url.blank? %>

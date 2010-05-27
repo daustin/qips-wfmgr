@@ -28,6 +28,18 @@ class SubmissionsController < ApplicationController
       @task_outputs += "#{t.exec_output}\n"
     end
     
+    
+    # get the prety input files
+    
+    @pretty_input_files_list = Array.new
+    
+    @submission.input_files.each do |inf|
+      pa = Project.login_bypass(:find_project_attachment_by_id, :id => inf)
+      
+      @pretty_input_files_list << "#{pa['project']['name']} --> #{pa['item']['attachment_file_name']}"
+      
+    end
+        
     flash[:error] = "Your submission appears to have an error and is probably stuck. Please contact your system administrator." if (! @submission.last_error.blank? && @submission.active?)
     
     respond_to do |format|
@@ -41,7 +53,8 @@ class SubmissionsController < ApplicationController
   def new
     @submission = Submission.new
     @workflow = Workflow.find(params[:id])
-    
+    @items_list = current_user.build_items_list
+
     c = 0
     @workflow.protocols.each do |p|
       @submission.tasks.build(:protocol => p, :rank => c)

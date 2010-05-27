@@ -1,3 +1,19 @@
+<%= stylesheet_link_tag "common.css" %>
+<%= stylesheet_link_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/ui.all.css" %>
+<%= stylesheet_link_tag "ui.multiselect.css" %>
+<%= javascript_include_tag "jquery-1.4.2.min.js" %>
+<%= javascript_include_tag "jquery-ui-1.8.1.custom.min.js" %>
+<%= javascript_include_tag "ui.multiselect.js" %>
+
+<script type="text/javascript">
+$(function(){
+  // choose either the full version
+  //$(".multiselect").multiselect();
+  // or disable some features
+  $(".multiselect").multiselect({sortable: false, searchable: true});
+});
+</script>
+
 <h1>New submission</h1>
 
 <% form_for(@submission) do |f| %>
@@ -8,24 +24,14 @@
     <%= f.hidden_field :user_id, :value => session[:user_id] %>
   </p>
 
-<p>
-	<% f.fields_for "input_files" do |b| %>
-	    <%= f.label :input_files %> (S3 Bucket URL) -   <%= link_to_function "more" do |page|
-			     page.insert_html :bottom,  "input_files", :partial => 'input_files', :locals => { :f => b }
 
-			   end %> - 
-		
-	    <div id="input_files">
-		  <%= render :partial => 'input_files', :locals => { :f => b } %>
-		</div>
-
-	<% end %>
-</p>
-
+  <%= f.label :input_files %>:<br>
+	
+  <%= f.select :input_files, options_for_select(@items_list, @submission.input_files),{}, {:multiple => true, :class => "multiselect"} %>
   
   <p>
     <%= f.label :project_id, 'Output Project:' %><br />
-    <%= f.select :project_id, Project.get(:index_by_id, :user_id => session[:user_id]).collect{|p| [p['name'], p['id']]} %>
+    <%= f.select :project_id, Project.get(:login_bypass, :method => :find_projects_by_user_id, :user_id => session[:user_id]).collect{|p| [p['name'], p['id']]} %>
   </p>
   
    <h3>Fill in Protocols Below:</h3>

@@ -7,5 +7,14 @@ class Project < ActiveResource::Base
     
   end
   
+  def self.login_bypass(method, options = {})
+    
+    options[:method] = method
+    
+    self.get(:login_bypass, options )
+    
+  end
+  
+  
   
 end

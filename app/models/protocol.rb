@@ -26,6 +26,7 @@ class Protocol < ActiveRecord::Base
             
     end
     
+    return @items_list
     
   end
   
