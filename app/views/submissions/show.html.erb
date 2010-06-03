@@ -24,7 +24,7 @@
 <p>
 
   <b>Output Project:</b>
-  <%=h Project.get(:login_bypass, :method => :find_project_by_id, :id => @submission.project_id)['name'] %>
+  <%=h Project.find(@submission.project_id).name %>
 </p>
 <p>
 
@@ -43,9 +43,9 @@
 		Auxiliary Files:
 		<% unless t.aux_files.nil? %>
 	<PRE><% t.aux_files.each do |af|
-	   pa = Project.login_bypass(:find_project_attachment_by_id, :id => af)
+	   i = Item.find(af)
 	-%>
-<%= "#{pa['project']['name']} --> #{pa['item']['attachment_file_name']}\n" %>
+<%= "#{i.attachment_file_name}" %>
 <% end -%>
 		</PRE>
 		<% end -%>

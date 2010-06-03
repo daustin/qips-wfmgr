@@ -6,6 +6,8 @@ class Protocol < ActiveRecord::Base
   serialize :default_aux_files
   
   accepts_nested_attributes_for :parameters, :reject_if => lambda { |a| a[:var_name].blank? } , :allow_destroy => true
+  
+  before_save :remove_dups_from_default_aux_files
     
   def role
     
@@ -19,10 +21,8 @@ class Protocol < ActiveRecord::Base
     
     default_aux_files.each do |daf|
       
-      pa = Project.get(:login_bypass, :method => 'find_project_attachment_by_id', :id => daf)
-      p = Project.get(:login_bypass, :method => 'find_project_by_id', :id => pa['project_id'])
-      i = Item.get(:login_bypass, :method => 'find_item_by_id', :id => pa['item_id'])
-      @items_list << ["#{p['name']} --> #{i['attachment_file_name']}","#{pa['id']}"]
+      i = Item.find(daf)
+      @items_list << ["#{i.attachment_file_name}","#{i.id}"]
             
     end
     
@@ -30,6 +30,12 @@ class Protocol < ActiveRecord::Base
     
   end
   
+  
+  def remove_dups_from_default_aux_files
+    
+    default_aux_files.uniq! unless default_aux_files.blank?
+    
+  end
   
   
   

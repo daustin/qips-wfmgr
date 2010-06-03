@@ -34,9 +34,9 @@ class SubmissionsController < ApplicationController
     @pretty_input_files_list = Array.new
     
     @submission.input_files.each do |inf|
-      pa = Project.login_bypass(:find_project_attachment_by_id, :id => inf)
+      i = Item.find(inf)
       
-      @pretty_input_files_list << "#{pa['project']['name']} --> #{pa['item']['attachment_file_name']}"
+      @pretty_input_files_list << "#{i.attachment_file_name}"
       
     end
         

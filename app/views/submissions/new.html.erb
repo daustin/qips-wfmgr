@@ -31,7 +31,7 @@ $(function(){
   
   <p>
     <%= f.label :project_id, 'Output Project:' %><br />
-    <%= f.select :project_id, Project.get(:login_bypass, :method => :find_projects_by_user_id, :user_id => session[:user_id]).collect{|p| [p['name'], p['id']]} %>
+    <%= f.select :project_id, current_user.projects.collect{|p| [p['name'], p['id']]} %>
   </p>
   
    <h3>Fill in Protocols Below:</h3>

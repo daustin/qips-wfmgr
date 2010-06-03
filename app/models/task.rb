@@ -9,7 +9,15 @@ class Task < ActiveRecord::Base
   serialize :aux_files
 
   before_save :generate_vars #do erb translation, generate params_url from timestamp
-
+  before_save :remove_dups_from_aux_files
+  
+  
+  def remove_dups_from_aux_files
+    
+    aux_files.uniq! unless aux_files.blank?
+    
+  end
+  
   
   def generate_vars
     #first lets generate the params url

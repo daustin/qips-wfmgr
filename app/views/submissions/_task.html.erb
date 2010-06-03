@@ -10,7 +10,7 @@
 
 <%= t.label :aux_files %>:<br>
 	
-<%= t.select :aux_files, options_for_select(@items_list, task.aux_files),{}, {:multiple => true, :class => "multiselect"} %>
+<%= t.select :aux_files, options_for_select(@items_list, task.protocol.default_aux_files),{}, {:multiple => true, :class => "multiselect"} %>
 
 
 <p>Executable: <%= t.text_field :executable, :value => task.protocol.executable, :readonly => true %> 

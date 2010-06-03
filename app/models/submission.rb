@@ -6,6 +6,15 @@ class Submission < ActiveRecord::Base
 
   accepts_nested_attributes_for :tasks
   
+  before_save :remove_dups_from_input_files
+  
+  def remove_dups_from_input_files
+    
+    input_files.uniq! unless input_files.blank?
+    
+  end
+  
+  
   ###############################################
   #
   #  fetches the ruote process associated with this submissions wfid

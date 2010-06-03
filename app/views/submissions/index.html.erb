@@ -9,7 +9,7 @@
 
 <% @submissions.each do |submission| %>
   <tr <%= submission.last_error.blank? ? '' : "id='flash_error'" %> >
-	<td><%=h Project.login_bypass(:find_project_by_id, :id => submission.project_id)['name'] %></td>
+	<td><%=h Project.find(submission.project_id).name %></td>
 	<td>|<% submission.tasks.each do |t| %>
 		<%= t.protocol.name %> | 
 		<% end %>
