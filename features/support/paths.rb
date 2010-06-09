@@ -10,16 +10,17 @@ module NavigationHelpers
     
     when /the home\s?page/
       '/'
-    when /the new submission page/
-      new_submission_path
-
-    when /the new workflow page/
-      new_workflow_path
-
-    when /the new protocol page/
-      new_protocol_path
-
-    
+    when /the new (.+) page/
+      new_polymorphic_path($1)
+    when /the list of (.+) page/
+      polymorphic_path($1)
+    when /the login page/
+      login_path
+    when /the edit page for (.+)/
+      edit_polymorphic_path(model($1))
+    when /the show page for (.+)/
+      polymorphic_path(model($1))
+      
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

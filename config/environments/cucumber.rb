@@ -25,3 +25,17 @@ config.gem 'cucumber-rails',   :lib => false, :version => '>=0.3.0' unless File.
 config.gem 'database_cleaner', :lib => false, :version => '>=0.5.0' unless File.directory?(File.join(Rails.root, 'vendor/plugins/database_cleaner'))
 config.gem 'capybara',         :lib => false, :version => '>=0.3.0' unless File.directory?(File.join(Rails.root, 'vendor/plugins/capybara'))
 
+
+RMGR_CMD = "curl -I --basic -u 'admin:admin' http://localhost:3001/farms/start_compute_instances/"
+
+#scratch space for s3
+S3_SCRATCH_SPACE = "daustin-test:qips_scratch/"
+
+# how long wfmgr waits between executing each task.  set to at least 60 seconds in production for use wih qips-node
+PROCESS_WAIT_TIME = 5
+
+#active resource site
+RMGR_SITE = 'http://admin:admin@localhost:3001'
+
+#active resource lims site
+ILIMS_SITE = 'http://admin:admin@localhost:3002'
