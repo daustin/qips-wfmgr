@@ -18,8 +18,8 @@ class Protocol < ActiveRecord::Base
   def build_selected_items_list
     
     @items_list = Array.new
-    
-    default_aux_files.each do |daf|
+    aux_files = self.default_aux_files ||= Array.new
+    aux_files.each do |daf|
       
       i = Item.find(daf)
       @items_list << ["#{i.attachment_file_name}","#{i.id}"]
@@ -33,7 +33,11 @@ class Protocol < ActiveRecord::Base
   
   def remove_dups_from_default_aux_files
     
-    default_aux_files.uniq! unless default_aux_files.blank?
+    if self.default_aux_files.blank?
+      self.default_aux_files = Array.new
+    else
+      self.default_aux_files = self.default_aux_files.uniq
+    end
     
   end
   
