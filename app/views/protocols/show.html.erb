@@ -17,14 +17,14 @@
 
 <p>
   <b>Executable</b><% if @protocol.run_concurrent == true %> (concurrent)<% end -%>:
-  <PRE><%= @protocol.executable %> <%= @protocol.default_args %> <%= @protocol.pass_filenames == true ? '--input=file1,file2' : ''%></PRE>
+  <PRE><%= @protocol.executable %> <%= @protocol.default_args %> <%= @protocol.pass_filenames == true ? '--input_files=file1,file2' : ''%></PRE>
 </p>
 <p>
   <b>Process Timeout:</b> <%= @protocol.process_timeout.blank? ? '' : "#{@protocol.process_timeout} mins"%>
 </p>
 
 <p>
-  <b>Default Auxiliary Files:</b> <BR><% unless @protocol.default_aux_files.empty? %><PRE><%= @pretty_selected_items_list.join("\n")%></PRE><% end -%>
+  <b>Default Auxiliary Files:</b> <BR><% unless @protocol.default_aux_files.blank? %><PRE><%= @pretty_selected_items_list.join("\n")%></PRE><% end -%>
 	
 </p>
 

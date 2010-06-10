@@ -32,11 +32,11 @@ $(function(){
     <%= f.select :default_aux_files, options_for_select(@items_list, @protocol.default_aux_files),{}, {:multiple => true, :class => "multiselect"} %>
 	</p>
   <p>
-    <%= f.check_box :run_concurrent %> Run Concurrently for each input file 
+    <%= f.check_box :run_concurrent %> <%= f.label :run_concurrent, "Run Concurrently" %>  
   </p>
 
   <p>
-    <%= f.collection_select :role_id, Role.find(:all), :id, :name %> Role to pass to Resource Manager when requesting nodes. 
+    <%= f.collection_select :role_id, Role.find(:all), :id, :name %> <%= f.label :role_id, "Resource Manager Role"%> 
   </p>
 
   <p>
@@ -48,7 +48,7 @@ $(function(){
   </p>
 
   <p>
-    <%= f.check_box :pass_filenames %> Pass Input Filenames to executable (--input_files='file1,file2'):    
+    <%= f.check_box :pass_filenames %> <%= f.label :pass_filenames, "Pass input filenames to executable" %> (--input_files='file1,file2')
   </p>
 
   <p>
