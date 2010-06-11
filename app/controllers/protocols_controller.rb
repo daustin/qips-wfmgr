@@ -45,7 +45,7 @@ class ProtocolsController < ApplicationController
   # POST /protocols.xml
   def create
     @protocol = Protocol.new(params[:protocol])
-
+    @items_list = current_user.build_items_list
     respond_to do |format|
       if @protocol.save
         flash[:notice] = 'Protocol was successfully created.'
