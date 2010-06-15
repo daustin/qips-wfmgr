@@ -4,7 +4,7 @@ Feature: Manage protocols
   I want to list, create, update, and destroy protocols and their parameters
   
   Scenario: list protocols
-    Given a protocol exists with name: "test protocol name", process_timeout: 5, description: "test protocol description", run_concurrent: "true", executable: "/path/test.sh", params_filename: "test.params"
+    Given a protocol exists with name: "test protocol name", process_timeout: 5, description: "test protocol description", run_concurrent: "true", executable: "/path/test.sh", params_filename: "test.params", role_id: 1
     And I log in with username: "test" and password: "password"
     When I go to the list of protocols page
     Then I should see "test protocol name"
@@ -91,7 +91,7 @@ Feature: Manage protocols
   @selenium
   Scenario: Edit a protocol. Add / remove params and aux files
     Given I log in with username: "test" and password: "password"
-    And a protocol exists with name: "test protocol name", process_timeout: 5, description: "test protocol description", run_concurrent: "true", executable: "/path/test.sh", params_filename: "test.params"
+    And a protocol exists with name: "test protocol name", process_timeout: 5, description: "test protocol description", run_concurrent: "true", executable: "/path/test.sh", params_filename: "test.params", role_id: 1
     When I go to the edit page for that protocol
     And I select index 0 from multiselect
     And I follow "Add"
@@ -109,11 +109,31 @@ Feature: Manage protocols
     Then I should not see "archive.tar"
     And I should not see "test label:"
     And 0 parameters should exist
-    
-  Scenario: Review a protocol. Verify parameters look like they should. Test drag and drop.
   
+  @selenium  
+  Scenario: Review a protocol. Verify parameters look like they should. Test drag and drop.
+    Given I log in with username: "test" and password: "password"
+    And a protocol: "test" exists with name: "test protocol name", process_timeout: 5, description: "test protocol description", run_concurrent: "true", executable: "/path/test.sh", params_filename: "test.params", role_id: 1
+    And a parameter exists with field_type: "text", field_label: "test text", var_name: "test_text", initial_value: "test value", protocol: protocol "test"
+    And a parameter exists with field_type: "select", field_label: "test select", var_name: "test_select", value_options: "one,two,three", initial_value: "two", protocol: protocol "test"
+    And a parameter exists with field_type: "radio_box", field_label: "test radio", var_name: "test_radio", value_options: "four,five,six", initial_value: "five", protocol: protocol "test"
+    And a parameter exists with field_type: "check_box", field_label: "test check", var_name: "test_check", protocol: protocol "test"
+    When I go to the show page for that protocol
+    Then I should see "test text:"
+    And input "test_text" should have value "test value"
+    And I should see "test select:"
+    And select "test_select" should have options "one,two,three"
+    And select "test_select" should have value "two"
+    And I should see "test radio:"
+    And radio "test_radio" should have options "four,five,six"
+    And radio "test_radio" should have value "five"
+    And input "test_check" should not be checked
+    When I drag the last parameter to the top
+    When I go to the show page for that protocol
+    Then input 0 in list "parameters" should be "test_check"
+      
   Scenario: Destroy a protocol
-    Given a protocol exists with name: "test protocol name", process_timeout: 5, description: "test protocol description", run_concurrent: "true", executable: "/path/test.sh", params_filename: "test.params"
+    Given a protocol exists with name: "test protocol name", process_timeout: 5, description: "test protocol description", run_concurrent: "true", executable: "/path/test.sh", params_filename: "test.params", role_id: 1
     And I log in with username: "test" and password: "password"
     When I go to the list of protocols page
     And I follow "Destroy"

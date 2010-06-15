@@ -12,3 +12,31 @@ end
 Then /^I should see the following protocols:$/ do |expected_protocols_table|
   expected_protocols_table.diff!(tableish('table tr', 'td,th'))
 end
+
+
+# dragging and parameter list related...
+
+When /^I drag the last parameter to the top$/ do
+  # find last parameter and drag to top
+  
+  lid = Parameter.last.id
+  fid = Parameter.first.id
+  
+  source_xpath = "//li[@id='parameter_#{lid}']//span[@class='handle']"
+  target_xpath = "//li[@id='parameter_#{fid}']//span[@class='handle']"
+  
+  drag(source_xpath,target_xpath) 
+  
+  # page.driver.find(source_xpath).first.drag_to(page.driver.find(target_xpath).first
+
+end
+
+Then /^input (\d+) in list "([^\"]*)" should be "([^\"]*)"$/ do |ind, list, id|
+  
+  within(:css, "ul##{list}") do
+    all('input')[ind.to_i][:id].should == id
+
+    
+  end
+
+end

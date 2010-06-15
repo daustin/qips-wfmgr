@@ -15,6 +15,7 @@ class ProtocolsController < ApplicationController
   def show
     @protocol = Protocol.find(params[:id])
     @pretty_selected_items_list = @protocol.build_selected_items_list.collect{|li| li[0]}
+    flash[:error] = "The role for this protocol is no longer available.  Please select a new role." if @protocol.role.nil? || @protocol.role.empty?
 
     respond_to do |format|
       format.html # show.html.erb

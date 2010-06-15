@@ -12,7 +12,7 @@
 
 <p>
   <b>Role:</b>
-  <%=h @protocol.role.name %>
+  <%=h @protocol.role.nil? || @protocol.role.empty? ? "INVALID ROLE" : @protocol.role.name %>
 </p>
 
 <p>

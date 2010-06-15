@@ -7,7 +7,7 @@ class Protocol < ActiveRecord::Base
   
   accepts_nested_attributes_for :parameters, :reject_if => lambda { |a| a[:var_name].blank? || a[:field_label].blank? } , :allow_destroy => true
   
-  validates_presence_of :name, :executable, :process_timeout
+  validates_presence_of :name, :executable, :process_timeout, :role
   validates_format_of :executable, :params_filename, :with => /^\S+$/i, :allow_blank => true, :message => "cannot contain whitespaces"
   validates_numericality_of :process_timeout, :only_integer => true, :message => "must be an integer"
   
