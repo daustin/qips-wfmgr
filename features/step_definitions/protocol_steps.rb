@@ -25,9 +25,8 @@ When /^I drag the last parameter to the top$/ do
   source_xpath = "//li[@id='parameter_#{lid}']//span[@class='handle']"
   target_xpath = "//li[@id='parameter_#{fid}']//span[@class='handle']"
   
-  drag(source_xpath,target_xpath) 
-  
-  # page.driver.find(source_xpath).first.drag_to(page.driver.find(target_xpath).first
+  drag(source_xpath,target_xpath) #this doesn't work!!
+  Capybara.page.driver.find(source_xpath).first.drag_to(Capybara.page.driver.find(target_xpath).first) # this doesn't work either!!  oh well
 
 end
 
