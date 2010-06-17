@@ -45,7 +45,7 @@ Feature: Manage protocols
     And I should see "test.params"
     And I should see "test one:"
     And I should see "test two:"
-    And I should see "archive.tar"
+    And I should see "test.txt"
     And I should see "Test one:"
     And I should not see "test1"
     And input "test1" should have value "init value"
@@ -99,14 +99,14 @@ Feature: Manage protocols
     And I fill in "Var Name" with "test1"
     And I fill in "Initial value" with "init value"
     And I press "Submit"
-    Then I should see "archive.tar"
+    Then I should see "test.txt"
     And I should see "test label:"
     And input "test1" should have value "init value"
     When I follow "Edit"
     And I remove index 0 from multiselect
     And I follow "Remove"
     And I press "Submit"
-    Then I should not see "archive.tar"
+    Then I should not see "test.txt"
     And I should not see "test label:"
     And 0 parameters should exist
   

@@ -3,6 +3,7 @@
 # wait for seconds
 
 When /^I wait for (\d+) seconds?$/ do |n|
+  puts "Sleeping for #{n} seconds..."
   sleep n.to_i
 end
 
@@ -68,6 +69,12 @@ end
 
 Then /^input "([^\"]*)" should not be checked$/ do |arg1|
   find_field(arg1)[:checked].should be_false 
+end
+
+# refresh the page
+
+When /^I refresh the page$/ do
+  visit(current_url)
 end
 
 
