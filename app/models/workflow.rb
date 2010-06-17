@@ -4,6 +4,7 @@ class Workflow < ActiveRecord::Base
   
   accepts_nested_attributes_for :stages, :reject_if => lambda { |a| a[:protocol_id].blank? } , :allow_destroy => true
   
+  validates_presence_of :name
 
     
 end

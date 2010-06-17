@@ -130,7 +130,7 @@ Feature: Manage protocols
     And input "test_check" should not be checked
     ### dragging doesn't appear to be supported right now 
     # When I drag the last parameter to the top
-    # When I go to the show page for that protocol
+    # And I go to the show page for that protocol
     # Then input 0 in list "parameters" should be "test_check"
       
   Scenario: Destroy a protocol

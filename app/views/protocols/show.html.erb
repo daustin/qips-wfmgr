@@ -76,7 +76,7 @@
 				<%= parameter.field_label %>: <%= select_tag "#{parameter.var_name}", options_for_select(parameter.value_options.split(','), parameter.initial_value) %>
 				<% else %>
 	
-				<% end%>
+				<% end %>
 				
 				<small><%= parameter.description %></small>
 				</p>

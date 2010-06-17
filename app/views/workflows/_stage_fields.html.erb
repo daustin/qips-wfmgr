@@ -1,4 +1,5 @@
 <div class="fields">
+<%= f.label :protocol_id, "-"%>
 <%= f.select :protocol_id,  Protocol.all.collect {|pt| ["#{pt.name}", pt.id]}, :include_blank => true %>   
 <%= f.hidden_field :_destroy %>   
 <%= link_to_remove_fields "remove", f %>
