@@ -29,3 +29,9 @@ RMGR_SITE = 'http://admin:admin@localhost:3001'
 
 #active resource lims site
 ILIMS_SITE = 'http://admin:admin@localhost:3002'
+
+# wget command.  must be quiet and output to stdout. and not check certs
+WGET_CMD = 'wget -q --no-check -O -' 
+
+# public link to lims site
+PUBLIC_ILIMS_SITE = 'http://localhost:3002'

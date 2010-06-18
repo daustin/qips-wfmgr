@@ -52,3 +52,9 @@ ILIMS_SITE = 'http://admin:admin@localhost:3002'
 
 # how long wfmgr waits between executing each task.  set to at least 60 seconds in production for use wih qips-node
 PROCESS_WAIT_TIME = 5
+
+# wget command.  must be quiet and output to stdout. and not check certs
+WGET_CMD = 'wget -q --no-check -O -' 
+
+# public link to lims site
+PUBLIC_ILIMS_SITE = 'http://localhost:3002'

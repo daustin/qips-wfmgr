@@ -13,7 +13,7 @@ Feature: Manage protocols
     And I should see "/path/test.sh"
     And I should see "test.params"
     
-  @selenium
+  @culerity
   Scenario: Create a valid protocol with parameters and aux files
     When I log in with username: "test" and password: "password"
     And I go to the new protocol page
@@ -88,7 +88,7 @@ Feature: Manage protocols
     And I should see "Process timeout must be an integer"
     And I should see "Var name cannot contain whitespaces"
 
-  @selenium
+  @culerity
   Scenario: Edit a protocol. Add / remove params and aux files
     Given I log in with username: "test" and password: "password"
     And a protocol exists with name: "test protocol name", process_timeout: 5, description: "test protocol description", run_concurrent: "true", executable: "/path/test.sh", params_filename: "test.params", role_id: 1

@@ -8,6 +8,9 @@ class Submission < ActiveRecord::Base
   
   before_save :remove_dups_from_input_files
   
+  validates_presence_of :input_files, :message => " - You must choose at least one input file!"
+  
+  
   def remove_dups_from_input_files
     
     input_files.uniq! unless input_files.blank?

@@ -77,6 +77,15 @@ When /^I refresh the page$/ do
   visit(current_url)
 end
 
+# scrub the database
+Given /^I clean the database$/ do
+  Submission.destroy_all
+  Task.destroy_all
+  Workflow.destroy_all
+  Stage.destroy_all
+  Parameter.destroy_all
+  Protocol.destroy_all
+end
 
 
 

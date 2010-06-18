@@ -28,6 +28,16 @@ class User < ActiveResource::Base
     
   end
 
+  def find_item_by_name(name)
+    
+    ia = items.select{|a| a['attachment_file_name'] == name }
+    unless ia.nil? || ia.empty?
+      i = Item.find(ia[0]['id'].to_s)
+      return i
+    end
+    
+  end
+
 
   def build_items_list
     

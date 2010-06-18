@@ -76,7 +76,8 @@ class SubmissionsController < ApplicationController
   # POST /submissions.xml
   def create
     @submission = Submission.new(params[:submission])
-
+    @items_list = current_user.build_items_list
+    
     respond_to do |format|
       if @submission.save
         @submission.submit_job

@@ -24,7 +24,8 @@
 <p>
 
   <b>Output Project:</b>
-  <%=h Project.find(@submission.project_id).name %>
+  <%= link_to Project.find(@submission.project_id).name, "#{PUBLIC_ILIMS_SITE}/projects/#{@submission.project_id}"%>
+
 </p>
 <p>
 

@@ -39,3 +39,6 @@ PROCESS_WAIT_TIME = 60
 
 #active resource site
 RMGR_SITE = 'http://localhost:3001'
+
+# public link to lims site
+PUBLIC_ILIMS_SITE = 'http://localhost:3002'

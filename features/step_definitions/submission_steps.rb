@@ -12,3 +12,10 @@ end
 Then /^I should see the following submissions:$/ do |expected_submissions_table|
   expected_submissions_table.diff!(tableish('table tr', 'td,th'))
 end
+
+When /^I change all submissions to have user_id: (\d+)$/ do |id|
+  
+  Submission.update_all("user_id = #{id}")
+  
+end
+

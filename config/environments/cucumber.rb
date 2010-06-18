@@ -21,6 +21,10 @@ config.action_controller.allow_forgery_protection    = false
 # ActionMailer::Base.deliveries array.
 config.action_mailer.delivery_method = :test
 
+out = `jruby --version`
+raise "please install jruby: \ninstall: jruby\n then run: jruby -S gem install celerity" unless out =~ /^jruby \d+.*/
+
+
 config.gem 'cucumber-rails',   :lib => false, :version => '>=0.3.0' unless File.directory?(File.join(Rails.root, 'vendor/plugins/cucumber-rails'))
 config.gem 'database_cleaner', :lib => false, :version => '>=0.5.0' unless File.directory?(File.join(Rails.root, 'vendor/plugins/database_cleaner'))
 config.gem 'capybara',         :lib => false, :version => '>=0.3.0' unless File.directory?(File.join(Rails.root, 'vendor/plugins/capybara'))
@@ -39,3 +43,15 @@ RMGR_SITE = 'http://admin:admin@localhost:3001'
 
 #active resource lims site
 ILIMS_SITE = 'http://admin:admin@localhost:3002'
+
+# user id for user 'test' in ilims
+ILIMS_USER_ID = 3
+
+# wget command.  must be quiet and output to stdout. and not check certs
+WGET_CMD = 'wget -q --no-check -O -' 
+
+# public link to lims site
+PUBLIC_ILIMS_SITE = 'http://localhost:3002'
+
+
+
