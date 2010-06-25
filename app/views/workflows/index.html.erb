@@ -29,7 +29,11 @@
 
 <br />
 
+<% if current_user.admin?%>
+<h1>All Workflows</h1>
+<% else %>
 <h1>Public Workflows</h1>
+<% end %>
 
 <table cellpadding="4" cellspacing="5">
   <tr>
@@ -40,13 +44,18 @@
 
 <% @workflows.each do |workflow| %>
   <tr>
-    <td><%=h workflow.name %></td>
+    <td><%=h workflow.name %> <% if current_user && current_user.admin? && workflow.user_id %>(<%= User.find(workflow.user_id).username %>)<% end -%></td>
     <td><%=h workflow.description %></td>
 	<td>|<% workflow.protocols.each do |p| %>
 		<%= p.name %> | 
 		<% end %>
 		</td>
 	<td><%= link_to 'Submit', new_workflow_submission_url(:id => workflow.id) %></td>
+	<% if current_user && current_user.admin? %>
+	<td><%= link_to 'Show', workflow %></td>
+    <td><%= link_to 'Edit', edit_workflow_path(workflow) %></td>
+    <td><%= link_to 'Destroy', workflow, :confirm => 'Are you sure?', :method => :delete %></td>
+    <% end -%>
   </tr>
 <% end %>
 </table>

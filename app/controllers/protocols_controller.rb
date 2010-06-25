@@ -1,6 +1,9 @@
 class ProtocolsController < ApplicationController
   # GET /protocols
   # GET /protocols.xml
+
+  before_filter :restrict_to_admin
+
   def index
     @protocols = Protocol.all
 

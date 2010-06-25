@@ -1,11 +1,31 @@
-Feature: Manage protocols
+Feature: Admin protocols
   In order to have users run specific tasks
   As an administrator
   I want to list, create, update, and destroy protocols and their parameters
   
+  Scenario Outline: Test login prompt for protocol, and show / hide admin links
+    Given a protocol exists with name: "test protocol name", process_timeout: 5, description: "test protocol description", run_concurrent: "true", executable: "/path/test.sh", params_filename: "test.params", role_id: 1
+    And I log in with username: "<login>" and password: "password"
+    And I go to <page>
+    Then I should <action>
+
+    Examples:
+      | login       | page                            | action           |
+      | test_admin  | the new protocol page           | not see "Log in" |
+      | test_admin  | the list of protocols page      | not see "Log in" |
+      | test_admin  | the edit page for that protocol | not see "Log in" |
+      | test_admin  | the list of workflows page      | see "Protocols"  |
+      | test_admin  | the list of workflows page      | see "RuoteKit"   |
+      | test        | the new protocol page           | see "Log in"     |
+      | test        | the list of protocols page      | see "Log in"     |
+      | test        | the edit page for that protocol | see "Log in"     |
+      | test        | the list of workflows page      | not see "Protocols" within ".heading" |
+      | test        | the list of workflows page      | not see "RuoteKit"  |
+    
+    
   Scenario: list protocols
     Given a protocol exists with name: "test protocol name", process_timeout: 5, description: "test protocol description", run_concurrent: "true", executable: "/path/test.sh", params_filename: "test.params", role_id: 1
-    And I log in with username: "test" and password: "password"
+    And I log in with username: "test_admin" and password: "password"
     When I go to the list of protocols page
     Then I should see "test protocol name"
     And I should see "test protocol description"
@@ -15,7 +35,7 @@ Feature: Manage protocols
     
   @culerity
   Scenario: Create a valid protocol with parameters and aux files
-    When I log in with username: "test" and password: "password"
+    When I log in with username: "test_admin" and password: "password"
     And I go to the new protocol page
     And I fill in "Name" with "test protocol name"
     And I fill in "Description" with "test protocol description"
@@ -53,7 +73,7 @@ Feature: Manage protocols
   
   @culerity
   Scenario: Reject an invalid protocol - missing information
-    When I log in with username: "test" and password: "password"
+    When I log in with username: "test_admin" and password: "password"
     And I go to the new protocol page
     And I fill in "Name" with ""
     And I fill in "Description" with "test protocol description"
@@ -71,7 +91,7 @@ Feature: Manage protocols
   
   @culerity
   Scenario: Reject an invalid protocol - invalid information format
-    When I log in with username: "test" and password: "password"
+    When I log in with username: "test_admin" and password: "password"
     And I go to the new protocol page
     And I fill in "Name" with "test protocol name"
     And I fill in "Description" with "test protocol description"
@@ -90,7 +110,7 @@ Feature: Manage protocols
 
   @culerity
   Scenario: Edit a protocol. Add / remove params and aux files
-    Given I log in with username: "test" and password: "password"
+    Given I log in with username: "test_admin" and password: "password"
     And a protocol exists with name: "test protocol name", process_timeout: 5, description: "test protocol description", run_concurrent: "true", executable: "/path/test.sh", params_filename: "test.params", role_id: 1
     When I go to the edit page for that protocol
     And I select index 0 from multiselect
@@ -112,7 +132,7 @@ Feature: Manage protocols
   
   @culerity
   Scenario: Review a protocol. Verify parameters look like they should. Test drag and drop.
-    Given I log in with username: "test" and password: "password"
+    Given I log in with username: "test_admin" and password: "password"
     And a protocol: "test" exists with name: "test protocol name", process_timeout: 5, description: "test protocol description", run_concurrent: "true", executable: "/path/test.sh", params_filename: "test.params", role_id: 1
     And a parameter exists with field_type: "text", field_label: "test text", var_name: "test_text", initial_value: "test value", protocol: protocol "test"
     And a parameter exists with field_type: "select", field_label: "test select", var_name: "test_select", value_options: "one,two,three", initial_value: "two", protocol: protocol "test"
@@ -135,7 +155,7 @@ Feature: Manage protocols
       
   Scenario: Destroy a protocol
     Given a protocol exists with name: "test protocol name", process_timeout: 5, description: "test protocol description", run_concurrent: "true", executable: "/path/test.sh", params_filename: "test.params", role_id: 1
-    And I log in with username: "test" and password: "password"
+    And I log in with username: "test_admin" and password: "password"
     When I go to the list of protocols page
     And I follow "Destroy"
     Then 0 protocols should exist

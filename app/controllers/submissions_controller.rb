@@ -1,11 +1,18 @@
 require 'rexml/document'
 
 class SubmissionsController < ApplicationController
+  
+  before_filter :restrict_to_owner_or_admin, :only => [:show]
+  
   # GET /submissions
   # GET /submissions.xml
   def index
-    @submissions = Submission.find(:all, :conditions => {:user_id => session[:user_id]}, :order => 'created_at DESC')
-
+    
+    if current_user.admin?
+      @submissions = Submission.find(:all, :order => 'created_at DESC')
+    else
+      @submissions = Submission.find(:all, :conditions => {:user_id => session[:user_id]}, :order => 'created_at DESC')
+    end
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @submissions }
@@ -67,11 +74,6 @@ class SubmissionsController < ApplicationController
     end
   end
 
-  # GET /submissions/1/edit
-  def edit
-    @submission = Submission.find(params[:id])
-  end
-
   # POST /submissions
   # POST /submissions.xml
   def create
@@ -86,23 +88,6 @@ class SubmissionsController < ApplicationController
         format.xml  { render :xml => @submission, :status => :created, :location => @submission }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @submission.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  # PUT /submissions/1
-  # PUT /submissions/1.xml
-  def update
-    @submission = Submission.find(params[:id])
-
-    respond_to do |format|
-      if @submission.update_attributes(params[:submission])
-        flash[:notice] = 'Submission was successfully updated.'
-        format.html { redirect_to(@submission) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
         format.xml  { render :xml => @submission.errors, :status => :unprocessable_entity }
       end
     end
@@ -126,4 +111,20 @@ class SubmissionsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  def restrict_to_owner_or_admin
+    
+    @submission = Submission.find(params[:id])
+    unless current_user.admin? || current_user.id == @submission.user_id
+      flash[:error] = "You do not have access to this submission. Please log in again."
+      store_target_location
+      redirect_to login_url
+      return
+    
+    end
+    
+  end
+  
+  
+  
 end

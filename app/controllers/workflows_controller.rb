@@ -1,10 +1,16 @@
 class WorkflowsController < ApplicationController
+
+  before_filter :restrict_to_owner_or_admin, :only => [:show, :edit, :update]
+
   # GET /workflows
   # GET /workflows.xml
   def index
     
-    
-    @workflows = Workflow.find(:all, :conditions => "user_id IS NULL OR user_id = '#{session[:user_id]}'")
+    if current_user.admin?
+      @workflows = Workflow.find(:all)
+    else
+      @workflows = Workflow.find(:all, :conditions => "user_id IS NULL OR user_id = '#{session[:user_id]}'")
+    end
     @my_workflows = current_user.workflows
 
     respond_to do |format|
@@ -44,7 +50,7 @@ class WorkflowsController < ApplicationController
   # POST /workflows.xml
   def create
     @workflow = Workflow.new(params[:workflow])
-
+    @workflow.user_id = nil if params[:make_public]
     respond_to do |format|
       if @workflow.save
         flash[:notice] = 'Workflow was successfully created.'
@@ -93,4 +99,20 @@ class WorkflowsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  def restrict_to_owner_or_admin
+    
+    @workflow = Workflow.find(params[:id])
+    unless current_user.admin? || current_user.id == @workflow.user_id
+      flash[:error] = "You do not have access to this workflow. Please log in again."
+      store_target_location
+      redirect_to login_url
+      return
+    
+    end
+    
+  end
+  
+  
+  
 end

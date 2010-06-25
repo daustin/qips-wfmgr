@@ -14,5 +14,16 @@ class ApplicationController < ActionController::Base
        username == "admin" && password == "admin"
     end
   end
+  
+  def restrict_to_admin
+    
+    unless current_user.admin?
+      flash[:error] = "You do not have admin. Please log in again."
+      store_target_location
+      redirect_to login_url
+      return
+    end
+  end
+
 
 end
