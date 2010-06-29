@@ -24,7 +24,12 @@
 <p>
 
   <b>Output Project:</b>
-  <%= link_to Project.find(@submission.project_id).name, "#{PUBLIC_ILIMS_SITE}/projects/#{@submission.project_id}", :popup => true %>
+  <% if RAILS_ENV == 'cucumber' || RAILS_ENV == 'test'
+	    popup = {} 
+	 else 
+		popup = {:popup => true }
+	 end %>
+  <%= link_to Project.find(@submission.project_id).name, "#{PUBLIC_ILIMS_SITE}/projects/#{@submission.project_id}", popup %>
 
 </p>
 <p>

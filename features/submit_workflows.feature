@@ -21,6 +21,7 @@ Feature: Submit Workflows
     And a protocol: "prot2" exists with name: "test tar", process_timeout: 5, executable: "/opt/bin/run_tar.rb", pass_filenames: true, role_id: 1
     And a stage exists with position: 1, protocol: protocol "prot1", workflow: workflow "work1"
     And a stage exists with position: 2, protocol: protocol "prot2", workflow: workflow "work1"
+    Then I remove all items except "test.txt" in lims
     And I log in with username: "test" and password: "password"
     And I should have 1 items in lims
     And I should have an item "test.txt" in lims
