@@ -24,7 +24,7 @@
 <p>
 
   <b>Output Project:</b>
-  <%= link_to Project.find(@submission.project_id).name, "#{PUBLIC_ILIMS_SITE}/projects/#{@submission.project_id}"%>
+  <%= link_to Project.find(@submission.project_id).name, "#{PUBLIC_ILIMS_SITE}/projects/#{@submission.project_id}", :popup => true %>
 
 </p>
 <p>
