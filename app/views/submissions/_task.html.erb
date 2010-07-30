@@ -7,6 +7,7 @@
 <%= t.hidden_field :params_url, :value => task.protocol.params_filename ||= '' %>
 <%= t.hidden_field :name, :value => task.protocol.name %>
 
+<p><PRE><%=h task.protocol.description %></PRE></p>
 
 <%= t.label :aux_files %>:<br>
 	

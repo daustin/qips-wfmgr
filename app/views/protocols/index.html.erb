@@ -12,7 +12,7 @@
 <% @protocols.each do |protocol| %>
   <tr>
     <td><%=h protocol.name %></td>
-    <td><%=h protocol.description %></td>
+    <td><%=h protocol.description[0..100] %>...</td>
     <td><%=h protocol.run_concurrent %></td>
     <td><%=h protocol.params_filename %></td>
     <td><%=h protocol.executable %> <%=h protocol.default_args %></td>
