@@ -23,8 +23,10 @@ Rails::Initializer.run do |config|
   config.gem "sqlite3-ruby", :lib => "sqlite3"
   config.gem "ruote", :version => '2.1.7'
   config.gem "ruote-amqp", :version => '2.1.5'
-  config.gem 'ruote-kit'
+  config.gem 'ruote-kit', :version => '2.1.4.1'
   config.gem 'sinatra', :version => '0.9.4'
+  config.gem "json", :lib => false, :version => ">=1.2.0"
+  config.gem "right_aws", :lib => false, :version => ">=1.10.0"
   # config.gem 'sinatra-respond_to', :version => '0.4.0'
   # config.gem 'erubis'
   # config.gem 'right_aws'

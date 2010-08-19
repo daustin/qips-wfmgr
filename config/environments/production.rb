@@ -30,20 +30,19 @@ config.action_view.cache_template_loading            = true
 RMGR_CMD = "curl -I --basic -u 'admin:admin' http://aws.itmat.upenn.edu/qips-rmgr-web/farms/start_compute_instances/"
 
 #scratch space for s3
-S3_SCRATCH_SPACE = "daustin-test:qips_scratch/"
-
+S3_SCRATCH_SPACE = "itmat-qips:scratch/"
 
 # how long wfmgr waits between executing each task.  set to at least 60 seconds in production for use wih qips-node
 PROCESS_WAIT_TIME = 60
 
 #active resource site
-RMGR_SITE = 'http://admin:admin@localhost:3001'
+RMGR_SITE = 'http://admin:admin@localhost/rmgr'
 
 #active resource lims site
-ILIMS_SITE = 'http://admin:admin@localhost:3002'
+ILIMS_SITE = 'http://admin:admin@localhost/ilims'
 
 # wget command.  must be quiet and output to stdout. and not check certs
 WGET_CMD = 'wget -q --no-check -O -' 
 
 # public link to lims site
-PUBLIC_ILIMS_SITE = 'http://localhost:3002'
+PUBLIC_ILIMS_SITE = 'http://aws.itmat.upenn.edu/ilims'
