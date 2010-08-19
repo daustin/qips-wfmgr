@@ -27,6 +27,7 @@ Rails::Initializer.run do |config|
   config.gem 'sinatra', :version => '0.9.4'
   config.gem "json", :lib => false, :version => ">=1.2.0"
   config.gem "right_aws", :lib => false, :version => ">=1.10.0"
+  config.gem "amqp", :lib => false, :version => "=0.6.7"
   # config.gem 'sinatra-respond_to', :version => '0.4.0'
   # config.gem 'erubis'
   # config.gem 'right_aws'
