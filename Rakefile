@@ -20,12 +20,13 @@ begin
     gemspec.authors = ["Dave Austin","Andrew Brader"]
     
     gemspec.add_dependency "sqlite3-ruby"
-    gemspec.add_dependency "ruote", '=2.1.7'
-    gemspec.add_dependency "ruote-amqp", '=2.1.5'
-    gemspec.add_dependency 'ruote-kit', '=2.1.4.1'
     gemspec.add_dependency 'sinatra', '=0.9.4'
+    gemspec.add_dependency 'sinatra-respond_to', "=0.4.0"
     gemspec.add_dependency "json", ">=1.2.0"
     gemspec.add_dependency "right_aws", ">=1.10.0"
+    gemspec.add_dependency "ruote", '=2.1.4'
+    gemspec.add_dependency "ruote-amqp", '=2.1.5'
+    gemspec.add_dependency 'ruote-kit', '=2.1.4.1'
         
     # testing gems!
     gemspec.add_development_dependency 'rspec-rails', '>=1.3.2'
