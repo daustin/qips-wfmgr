@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{qips-wfmgr}
-  s.version = "0.5.4"
+  s.version = "0.5.7"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Dave Austin", "Andrew Brader"]
-  s.date = %q{2010-08-19}
+  s.date = %q{2010-08-25}
   s.default_executable = %q{static_workflow_test.rb}
   s.description = %q{Workflow Manager is in charge of creating, submitting, and tracking custom workflows.}
   s.email = %q{daustin@mail.med.upenn.edu}
@@ -79,6 +79,7 @@ Gem::Specification.new do |s|
      "bin/static_workflow_test.rb",
      "config/boot.rb",
      "config/cucumber.yml",
+     "config/database.yml",
      "config/environment.rb",
      "config/environments/cucumber.rb",
      "config/environments/development.rb",
@@ -341,12 +342,13 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<sqlite3-ruby>, [">= 0"])
-      s.add_runtime_dependency(%q<ruote>, ["= 2.1.7"])
-      s.add_runtime_dependency(%q<ruote-amqp>, ["= 2.1.5"])
-      s.add_runtime_dependency(%q<ruote-kit>, ["= 2.1.4.1"])
       s.add_runtime_dependency(%q<sinatra>, ["= 0.9.4"])
+      s.add_runtime_dependency(%q<sinatra-respond_to>, ["= 0.4.0"])
       s.add_runtime_dependency(%q<json>, [">= 1.2.0"])
       s.add_runtime_dependency(%q<right_aws>, [">= 1.10.0"])
+      s.add_runtime_dependency(%q<ruote>, ["= 2.1.4"])
+      s.add_runtime_dependency(%q<ruote-amqp>, ["= 2.1.5"])
+      s.add_runtime_dependency(%q<ruote-kit>, ["= 2.1.4.1"])
       s.add_development_dependency(%q<rspec-rails>, [">= 1.3.2"])
       s.add_development_dependency(%q<rspec>, [">= 1.2.9"])
       s.add_development_dependency(%q<cucumber>, [">= 0.4.3"])
@@ -357,12 +359,13 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<capybara>, ["= 0.3.8"])
     else
       s.add_dependency(%q<sqlite3-ruby>, [">= 0"])
-      s.add_dependency(%q<ruote>, ["= 2.1.7"])
-      s.add_dependency(%q<ruote-amqp>, ["= 2.1.5"])
-      s.add_dependency(%q<ruote-kit>, ["= 2.1.4.1"])
       s.add_dependency(%q<sinatra>, ["= 0.9.4"])
+      s.add_dependency(%q<sinatra-respond_to>, ["= 0.4.0"])
       s.add_dependency(%q<json>, [">= 1.2.0"])
       s.add_dependency(%q<right_aws>, [">= 1.10.0"])
+      s.add_dependency(%q<ruote>, ["= 2.1.4"])
+      s.add_dependency(%q<ruote-amqp>, ["= 2.1.5"])
+      s.add_dependency(%q<ruote-kit>, ["= 2.1.4.1"])
       s.add_dependency(%q<rspec-rails>, [">= 1.3.2"])
       s.add_dependency(%q<rspec>, [">= 1.2.9"])
       s.add_dependency(%q<cucumber>, [">= 0.4.3"])
@@ -374,12 +377,13 @@ Gem::Specification.new do |s|
     end
   else
     s.add_dependency(%q<sqlite3-ruby>, [">= 0"])
-    s.add_dependency(%q<ruote>, ["= 2.1.7"])
-    s.add_dependency(%q<ruote-amqp>, ["= 2.1.5"])
-    s.add_dependency(%q<ruote-kit>, ["= 2.1.4.1"])
     s.add_dependency(%q<sinatra>, ["= 0.9.4"])
+    s.add_dependency(%q<sinatra-respond_to>, ["= 0.4.0"])
     s.add_dependency(%q<json>, [">= 1.2.0"])
     s.add_dependency(%q<right_aws>, [">= 1.10.0"])
+    s.add_dependency(%q<ruote>, ["= 2.1.4"])
+    s.add_dependency(%q<ruote-amqp>, ["= 2.1.5"])
+    s.add_dependency(%q<ruote-kit>, ["= 2.1.4.1"])
     s.add_dependency(%q<rspec-rails>, [">= 1.3.2"])
     s.add_dependency(%q<rspec>, [">= 1.2.9"])
     s.add_dependency(%q<cucumber>, [">= 0.4.3"])
