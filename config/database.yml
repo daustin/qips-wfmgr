@@ -16,10 +16,15 @@ test: &TEST
   timeout: 5000
 
 production:
-  adapter: sqlite3
-  database: db/production.sqlite3
-  pool: 5
-  timeout: 5000
+    adapter: mysql
+    encoding: utf8
+    database: qips-wfmgr
+    host: itmat-mysql.cydd9ngtgylw.us-east-1.rds.amazonaws.com
+    username: qips
+    password: 6ACuQjcAaPUQ
+    socket: /tmp/mysql.sock
+    pool: 5
+    timeout: 5000
 
 cucumber:
   <<: *TEST

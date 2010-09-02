@@ -23,6 +23,7 @@ begin
     gemspec.add_dependency 'sinatra', '=0.9.4'
     gemspec.add_dependency 'sinatra-respond_to', "=0.4.0"
     gemspec.add_dependency "json", ">=1.2.0"
+    gemspec.add_dependency "mysql", '>=2.1.0'
     gemspec.add_dependency "right_aws", ">=1.10.0"
     gemspec.add_dependency "ruote", '=2.1.7'
     gemspec.add_dependency "ruote-amqp", '=2.1.5'
