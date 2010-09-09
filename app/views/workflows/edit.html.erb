@@ -13,7 +13,7 @@
 	   <%= f.text_area :description, :size => "30x3"%>
 	  </p>	
 	 
-	- Protocols in workflow - 
+	<h3>Protocols in workflow</h3> 
 
 	<% f.fields_for :stages do |builder| %>
 		<%= render :partial => 'stage_fields', :locals => { :f => builder }%>

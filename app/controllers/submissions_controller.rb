@@ -34,18 +34,6 @@ class SubmissionsController < ApplicationController
       @task_outputs += "\n== #{t.rank} - #{t.name} =====================\n\n"
       @task_outputs += "#{t.exec_output}\n"
     end
-    
-    
-    # get the prety input files
-    
-    @pretty_input_files_list = Array.new
-    
-    @submission.input_files.each do |inf|
-      i = Item.find(inf)
-      
-      @pretty_input_files_list << "#{i.attachment_file_name}"
-      
-    end
         
     flash[:error] = "Your submission appears to have an error and is probably stuck. Please contact your system administrator." if (! @submission.last_error.blank? && @submission.active?)
     

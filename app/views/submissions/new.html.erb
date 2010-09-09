@@ -24,17 +24,16 @@ $(function(){
     <%= f.hidden_field :user_id, :value => session[:user_id] %>
   </p>
 
+  <p>
+    <%= f.label :project_id, 'Destination Project:' %>
+    <%= f.select :project_id, current_user.projects.collect{|p| [p['name'], p['id']]} %>
+  </p>
 
   <%= f.label :input_files %>:<br>
 	
   <%= f.select :input_files, options_for_select(@items_list, @submission.input_files),{}, {:multiple => true, :class => "multiselect"} %>
   
-  <p>
-    <%= f.label :project_id, 'Output Project:' %><br />
-    <%= f.select :project_id, current_user.projects.collect{|p| [p['name'], p['id']]} %>
-  </p>
-  
-   <h3>Fill in Protocols Below:</h3>
+   <h2>Fill in Protocols Below:</h2>
 
   <div id="tasks">
 	<table cellspacing=0 cellpadding=5 border=1>

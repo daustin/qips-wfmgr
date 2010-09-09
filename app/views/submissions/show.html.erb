@@ -18,12 +18,12 @@
 </p>
 <p>
   <b>Input Files:</b>
-	<PRE><%= @pretty_input_files_list.join("\n") %></PRE>
+	<PRE><%= @submission.pretty_input_list.join("\n") %></PRE>
 
 </p>
 <p>
 
-  <b>Output Project:</b>
+  <b>Destination Project:</b>
   <% if RAILS_ENV == 'cucumber' || RAILS_ENV == 'test'
 	    popup = {} 
 	 else 
@@ -47,12 +47,10 @@
 	</p>
 	<p>
 		Auxiliary Files:
-		<% unless t.aux_files.nil? %>
-	<PRE><% t.aux_files.each do |af|
-	   i = Item.find(af)
-	-%>
-<%= "#{i.attachment_file_name}" %>
-<% end -%>
+		<% unless t.pretty_aux_list.nil? %>
+	<PRE><% t.pretty_aux_list.each do |pal| -%>
+			<%= "#{pal}" %>
+			<% end -%>
 		</PRE>
 		<% end -%>
 	</p>

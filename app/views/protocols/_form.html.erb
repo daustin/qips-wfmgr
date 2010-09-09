@@ -46,11 +46,7 @@ $(function(){
   <p>
     <%= f.label :default_args %>:    <%= f.text_field :default_args %>
   </p>
-
-  <p>
-    <%= f.check_box :pass_filenames %> <%= f.label :pass_filenames, "Pass input filenames to executable" %> (--input_files='file1,file2')
-  </p>
-
+    <%= f.hidden_field :pass_filenames %> 
   <p>
     <%= f.label :process_timeout %>:    <%= f.text_field :process_timeout, :size => 5 %>
   </p>

@@ -7,14 +7,27 @@ class Task < ActiveRecord::Base
     
   serialize :param_values
   serialize :aux_files
+  serialize :pretty_aux_list
 
   before_save :generate_vars #do erb translation, generate params_url from timestamp
-  before_save :remove_dups_from_aux_files
+  before_save :lookup_aux_files
   
   
-  def remove_dups_from_aux_files
+  def lookup_aux_files
     
-    aux_files.uniq! unless aux_files.blank?
+    self.pretty_aux_list = []
+    
+    unless aux_files.blank?
+    
+      aux_files.uniq!
+    
+      #now make pretty       
+      aux_files.each do |af|
+        i = Item.find(af)
+        self.pretty_aux_list << "#{i.attachment_file_name.strip}"
+      end
+    
+    end
     
   end
   

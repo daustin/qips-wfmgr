@@ -30,6 +30,9 @@ class ProtocolsController < ApplicationController
   # GET /protocols/new.xml
   def new
     @protocol = Protocol.new
+    @protocol.pass_filenames = true
+    @protocol.process_timeout = 60
+    @protocol.run_concurrent = true
     @items_list = current_user.build_items_list
 
     respond_to do |format|

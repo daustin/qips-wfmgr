@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{qips-wfmgr}
-  s.version = "0.5.8"
+  s.version = "0.5.9"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Dave Austin", "Andrew Brader"]
-  s.date = %q{2010-08-26}
+  s.date = %q{2010-09-02}
   s.default_executable = %q{static_workflow_test.rb}
   s.description = %q{Workflow Manager is in charge of creating, submitting, and tracking custom workflows.}
   s.email = %q{daustin@mail.med.upenn.edu}
@@ -345,6 +345,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<sinatra>, ["= 0.9.4"])
       s.add_runtime_dependency(%q<sinatra-respond_to>, ["= 0.4.0"])
       s.add_runtime_dependency(%q<json>, [">= 1.2.0"])
+      s.add_runtime_dependency(%q<mysql>, [">= 2.1.0"])
       s.add_runtime_dependency(%q<right_aws>, [">= 1.10.0"])
       s.add_runtime_dependency(%q<ruote>, ["= 2.1.7"])
       s.add_runtime_dependency(%q<ruote-amqp>, ["= 2.1.5"])
@@ -362,6 +363,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<sinatra>, ["= 0.9.4"])
       s.add_dependency(%q<sinatra-respond_to>, ["= 0.4.0"])
       s.add_dependency(%q<json>, [">= 1.2.0"])
+      s.add_dependency(%q<mysql>, [">= 2.1.0"])
       s.add_dependency(%q<right_aws>, [">= 1.10.0"])
       s.add_dependency(%q<ruote>, ["= 2.1.7"])
       s.add_dependency(%q<ruote-amqp>, ["= 2.1.5"])
@@ -380,6 +382,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<sinatra>, ["= 0.9.4"])
     s.add_dependency(%q<sinatra-respond_to>, ["= 0.4.0"])
     s.add_dependency(%q<json>, [">= 1.2.0"])
+    s.add_dependency(%q<mysql>, [">= 2.1.0"])
     s.add_dependency(%q<right_aws>, [">= 1.10.0"])
     s.add_dependency(%q<ruote>, ["= 2.1.7"])
     s.add_dependency(%q<ruote-amqp>, ["= 2.1.5"])

@@ -2,18 +2,31 @@ class Submission < ActiveRecord::Base
   
   has_many :tasks, :order => :rank, :dependent => :destroy
   serialize :input_files
+  serialize :pretty_input_list
   serialize :process_definition
 
   accepts_nested_attributes_for :tasks
   
-  before_save :remove_dups_from_input_files
+  before_save :lookup_input_files
   
   validates_presence_of :input_files, :message => " - You must choose at least one input file!"
   
   
-  def remove_dups_from_input_files
+  def lookup_input_files
     
-    input_files.uniq! unless input_files.blank?
+    self.pretty_input_list = []
+    
+    unless input_files.blank?
+  
+      input_files.uniq! 
+      
+      #now make pretty       
+      input_files.each do |inf|
+        i = Item.find(inf)
+        self.pretty_input_list << "#{i.attachment_file_name.strip}"
+      end
+      
+    end
     
   end
   
@@ -63,6 +76,7 @@ class Submission < ActiveRecord::Base
     save
     
     # RuoteAMQP::WorkitemListener.new(RuoteKit.engine)
+    puts self.process_definition
     wfid = RuoteKit.engine.launch(self.process_definition)
     # Ruote.engine.wait_for(wfid)
 

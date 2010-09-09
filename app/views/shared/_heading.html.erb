@@ -2,7 +2,6 @@
 
   <tr class="data_row"> 
     <td align="left"><%= image_tag("qips.png", :size => "125x65") %></td>
-    <td align="left"><%= image_tag("handoff.jpg", :size => "153x65") %></td>
     <td align="center"><big><strong> [ Workflow Manager ]</strong></big><BR>Welcome<%= session[:user_id].nil? ? '' : ", #{User.find(session[:user_id]).username}" -%>!</td>
 
 
