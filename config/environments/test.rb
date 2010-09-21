@@ -39,7 +39,7 @@ config.gem "capybara", :lib => false, :version => "=0.3.8"
 # like if you have constraints or database-specific column types
 # config.active_record.schema_format = :sql
 
-RMGR_CMD = 'curl --basic -u "admin:admin" http://localhost:3000/'
+RMGR_CMD = "curl -I --basic -u 'admin:admin' http://localhost:3001/farms/start_by_role"
 
 #scratch space for s3
 S3_SCRATCH_SPACE = "daustin-test:qips_scratch/"
