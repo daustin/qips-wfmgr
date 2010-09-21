@@ -18,7 +18,7 @@ test: &TEST
 production:
     adapter: mysql
     encoding: utf8
-    database: qips-wfmgr
+    database: qips_wfmgr
     host: itmat-mysql.cydd9ngtgylw.us-east-1.rds.amazonaws.com
     username: qips
     password: 6ACuQjcAaPUQ
