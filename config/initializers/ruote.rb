@@ -180,8 +180,9 @@ module Ruote
       ActionController::Base.logger.info("Rmgr Request Participant: \n#{workitem.to_h.inspect}")
       
       num_nodes = workitem.fields['params']['num_nodes'] ||= 1
+      role_id = workitem.fields['params']['role_id']      
       
-      out = `#{RMGR_CMD}#{num_nodes}.xml`
+      out = `#{RMGR_CMD}/#{role_id}/#{num_nodes}.xml`
       
       unless out =~ /201 Created/
         #throw error!
