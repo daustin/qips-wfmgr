@@ -51,20 +51,21 @@
 		<% @protocol.parameters.each do |parameter| %>
 			<% content_tag_for :li, parameter  do -%>
 		
-				<p>	
-				<span class="handle">[move]</span>
+				<table>
+				<tr>				
+				<td nowrap><span class="handle">[move]</span> <%= parameter.field_label %>: </td>
+				<td>
 				<% case parameter.field_type  when 'text' %>
 
-				<%= parameter.field_label %>: <%= text_field_tag parameter.var_name, parameter.initial_value %> 
+			    <%= text_field_tag parameter.var_name, parameter.initial_value %> 
 
 				<% when 'check_box' %>
 
-				<%= parameter.field_label %>: <%= check_box_tag "#{parameter.var_name}", parameter.initial_value %>
+			    <%= check_box_tag "#{parameter.var_name}", parameter.initial_value %>
 
 				<% when 'radio_box' 
 				# enumerate through choices
 				%>
-				<%= parameter.field_label %>: <BR>
 				<% parameter.value_options.split(',').each do |v| 
 	
 					checked = v.strip.eql?(parameter.initial_value.strip)
@@ -73,13 +74,14 @@
 				<%= radio_button_tag "#{parameter.var_name}", v.strip, checked %> <%= v.strip %>
 				<% end -%>
 				<% when 'select' %>
-				<%= parameter.field_label %>: <%= select_tag "#{parameter.var_name}", options_for_select(parameter.value_options.split(','), parameter.initial_value) %>
+		        <%= select_tag "#{parameter.var_name}", options_for_select(parameter.value_options.split(','), parameter.initial_value) %>
 				<% else %>
 	
 				<% end %>
-				
-				<small><%= parameter.description %></small>
-				</p>
+				</td>
+				<td>
+				<small><%= parameter.description %></small></td>
+				</tr></table>
 			<% end %>
 		<% end %>
 	</ul>

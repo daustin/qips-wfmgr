@@ -20,10 +20,11 @@
 	(includes input files)
 	<% end -%>
 </p>
-
+    
+   <table border='0' cellspacing='0' cellpadding='3'>
 	<% t.fields_for "param_values" do |b| %>
 	 <%= render :partial => 'parameter', :collection => task.protocol.parameters, :locals => { :p => b } %>
 	<% end %>
-
+   </table>
 </div>
 </td></tr>

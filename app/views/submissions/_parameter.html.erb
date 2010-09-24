@@ -1,16 +1,13 @@
-<p>	
+<tr>
+<td nowrap><%= p.label parameter.var_name, parameter.field_label %>:</td>
 <% case parameter.field_type  when 'text' %>
-
-<%= p.label parameter.var_name, parameter.field_label %>: <%= p.text_field parameter.var_name, :value => parameter.initial_value %> 
-
+<td> <%= p.text_field parameter.var_name, :value => parameter.initial_value %> </td>
 <% when 'check_box' %>
-
-<%= p.label parameter.var_name, parameter.field_label %>: <%= p.check_box parameter.var_name %>
-
+<td><%= p.check_box parameter.var_name %></td>
 <% when 'radio_box' 
 # enumerate through choices
 %>
-<%= p.label parameter.var_name, parameter.field_label %>: <BR>
+<td nowrap>
 <% parameter.value_options.split(',').each do |v| 
 	
 	checked = v.strip.eql?(parameter.initial_value.strip)
@@ -18,11 +15,19 @@
 	-%>
 <%= p.radio_button parameter.var_name, v, :checked => checked %> <%= v.strip %>
 <% end -%>
+</td>
 <% when 'select' %>
-<%= p.label parameter.var_name, parameter.field_label %>: <%= select_tag parameter.var_name, options_for_select(parameter.value_options.split(','), parameter.initial_value) %>
+<td>
+<%= select_tag parameter.var_name, options_for_select(parameter.value_options.split(','), parameter.initial_value) %>
+</td>
 <% else %>
 
 	
 <% end%>
-</p>	
+
+<td>
+<small><%= parameter.description %></small>
+</td>
+
+</tr>
  
