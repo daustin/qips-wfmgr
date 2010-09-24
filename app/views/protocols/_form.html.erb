@@ -40,7 +40,7 @@ $(function(){
   </p>
 
   <p>
-    <%= f.label :executable %> (full path):    <%= f.text_field :executable %>
+    <%= f.label :executable %>:    <%= f.text_field :executable %>
   </p>
 
   <p>
@@ -67,12 +67,23 @@ $(function(){
        <h2>Protocol Parameters</h2>
        <p>These Parameters will be presented to the user so they can specify the settings for the job.  The parameter values will get saved into a file as the params filename, which is passed along to the working directory.  The format of the params file is generated from the params template above(erb). Use erb tags to insert values into the params file (see above).
 
-		<% f.fields_for :parameters do |b| %>
-
-        	<%= render :partial => 'parameter_fields', :locals => { :f => b } %>
-	
-		<% end %>
 		
+		<table>
+		<tr>
+		  <th width=100 >Field type</th>
+		  <th width=150>Label</th>
+		  <th width=140>Variable Name</th>
+		  <th width=140>Initial Value</th>
+		  <th width=140>Options (csv)</th>
+		  <th width=150>Description</th>
+	
+		</tr>
+		</table>
+	    <% f.fields_for :parameters do |b| %>
+       		<%= render :partial => 'parameter_fields', :locals => { :f => b } %>
+        <% end %>
+		
+			
 		<div>
 			<%= link_to_add_fields "Add", f, :parameters %>
 		</div>
@@ -84,9 +95,6 @@ $(function(){
   </table>
 
 
-
-
- 
   <p>
     <%= f.submit 'Submit' %>
   </p>
