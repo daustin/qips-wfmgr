@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{qips-wfmgr}
-  s.version = "0.5.12"
+  s.version = "0.5.13"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Dave Austin", "Andrew Brader"]
-  s.date = %q{2010-09-21}
+  s.date = %q{2010-09-24}
   s.default_executable = %q{static_workflow_test.rb}
   s.description = %q{Workflow Manager is in charge of creating, submitting, and tracking custom workflows.}
   s.email = %q{daustin@mail.med.upenn.edu}
@@ -155,6 +155,7 @@ Gem::Specification.new do |s|
      "lib/authentication.rb",
      "lib/s3_helper.rb",
      "lib/tasks/cucumber.rake",
+     "lib/tasks/import.rake",
      "lib/tasks/ruote_kit.rake",
      "pkg/qips-wfmgr-0.1.0.gem",
      "pkg/qips-wfmgr-0.1.1.gem",

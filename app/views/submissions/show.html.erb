@@ -46,12 +46,12 @@
 	  <pre><%=h t.executable %> <%=h t.args %></pre>
 	</p>
 	<p>
-		Auxiliary Files:
+		Auxiliary Files:<BR><BR>
 		<% unless t.pretty_aux_list.nil? %>
-	<PRE><% t.pretty_aux_list.each do |pal| -%>
-			<%= "#{pal}" %>
-			<% end -%>
-		</PRE>
+<small><% t.pretty_aux_list.each do |pal| -%>
+<%= "#{pal}" -%>
+<% end -%><BR>
+</small>
 		<% end -%>
 	</p>
 	

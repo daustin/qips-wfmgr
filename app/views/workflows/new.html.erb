@@ -23,7 +23,7 @@
 	  </p>	
       <p>
 	    
-	    <%= check_box_tag :make_public%> Make Public
+	    <%= check_box_tag :make_public %> Make Public
 	  </p>
 
 	<h3>Protocols in workflow</h3> 
@@ -50,7 +50,7 @@
 			
 			<%= hidden_field_tag "submit_flag", "0" %>
 			
-		    <%= f.submit 'Save & Submit', :onclick => "$('submit_flag').value = 1"  %>  <%= f.submit 'Save Only'%> <%= link_to 'Back', workflows_path %>
+		    <%= f.submit 'Save & Submit', :onclick => "$('#submit_flag').value = 1"  %>  <%= f.submit 'Save Only' %> <%= link_to 'Back', workflows_path %>
 		 </p>
 	</td>
 </tr>		
